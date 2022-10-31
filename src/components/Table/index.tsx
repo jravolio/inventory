@@ -9,6 +9,7 @@ interface ProjectProps{
   integracao: Array<String>;
   projeto: Array<String>;
   servidor: Array<String>;
+  nome: string;
 
 }
 
@@ -20,7 +21,6 @@ interface TableProps{
 
 
 export function Table({ onOpenNewProjectModal, props ,columns }: TableProps) {
-  const [projects, setProjects] = useState<ProjectProps[]>([props[0]])
 
   console.log(props)
   // Coluna de edição e de ações
