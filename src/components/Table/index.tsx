@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {DataGrid,GridColDef, GridToolbar} from "@mui/x-data-grid";
+import {DataGrid,GridColDef, GridToolbar, GridRowsProp} from "@mui/x-data-grid";
 import styles from "./styles.module.scss";
 import Button from "@mui/material/Button";
 
@@ -10,12 +10,13 @@ interface ProjectProps{
   projeto: Array<String>;
   servidor: Array<String>;
   nome: string;
+  id: number;
 
 }
 
 interface TableProps{
   onOpenNewProjectModal: () => void;
-  props: ProjectProps[];
+  props: GridRowsProp[];
   columns: GridColDef[];
 }
 
@@ -23,6 +24,7 @@ interface TableProps{
 export function Table({ onOpenNewProjectModal, props ,columns }: TableProps) {
 
   console.log(props)
+  
   // Coluna de edição e de ações
   const actionColumn = [
     {

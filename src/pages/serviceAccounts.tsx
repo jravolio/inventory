@@ -31,10 +31,10 @@ export default function ServiceAccounts() {
 
   // Definindo colunas
   const columns: GridColDef[] = [
-    { field: "conta_servico", headerName: "Conta", width: 200 },
-    { field: "integracao", headerName: "Integração", width: 100 },
-    { field: "projeto", headerName: "Projeto", width: 200 },
-    { field: "servidor", headerName: "Servidor", width: 200 },
+    { field: "conta_servico", headerName: "Conta", width: 200, valueGetter: (params) => params.row.conta_servico.nome },
+    { field: "integracao", headerName: "Integração", width: 100, valueGetter: (params) => params.row.integracao.nome },
+    { field: "projeto", headerName: "Projeto", width: 200, valueGetter: (params) => params.row.projeto.nome },
+    { field: "servidor", headerName: "Servidor", width: 200, valueGetter: (params) => params.row.servidor.nome },
   ];
 
   return (
