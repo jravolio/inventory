@@ -1,4 +1,4 @@
-import { FiUsers, FiBox, FiServer, FiFeather } from 'react-icons/fi'
+import { FiUsers, FiBox, FiServer, FiFeather, FiBook } from 'react-icons/fi'
 import styles from './styles.module.scss'
 
 
@@ -25,12 +25,14 @@ export function Sidebar() {
               </a>
             </li>
             <li>
+              <a href="/servers">
               <FiServer className={styles.icon} />
               <span>Servidores</span>
+              </a>
             </li>
             <li>
               <a href="/">
-              <FiFeather className={styles.icon} />
+              <FiBook className={styles.icon} />
               <span>Cadastros</span>
               </a>
             </li>

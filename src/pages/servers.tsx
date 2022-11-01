@@ -23,7 +23,7 @@ export default function ServiceAccounts() {
   // Recebendo a resposta da api
   useEffect(() => {
     const getProjects = async () => {
-      const { data: res } = await api.get("/projetos");
+      const { data: res } = await api.get("/servidores");
       setProjects(res);
     };
     getProjects();
@@ -31,16 +31,29 @@ export default function ServiceAccounts() {
 
   // Definindo colunas
   const columns: GridColDef[] = [
-    { field: "nome", headerName: "Nome", width: 150 },
-    { field: "descricao", headerName: "Descrição", width: 150 },
+    { field: "nome", headerName: "Conta", width: 200 },
+    { field: "descricao", headerName: "Descrição", width: 100 },
     { field: "observacao", headerName: "Observação", width: 200 },
-    { field: "area_negocio", headerName: "Área de negócio", width: 200 },
-    { field: "tipo", headerName: "Tipo de Projeto", width: 200, valueGetter: (params) =>{ 
-      if (params.row.tipo == 1){
-      return 'V.tal'
+    { field: "tipo", headerName: "Tipo", width: 200, valueGetter: (params) =>{ 
+      if (params.row.tipo == 'A'){
+      return 'Servidor Aplicacional'
     }
       else{
-        return'Oi'
+        return 'Banco de Dados'
+      }
+  }  },
+    { field: "ambiente", headerName: "Ambiente", width: 200, valueGetter: (params) =>{ 
+      if (params.row.ambiente == 'PRD'){
+      return 'Produção'
+    }
+      if (params.row.ambiente == 'DEV'){
+        return 'Desenvolvimento'
+      }
+      if (params.row.ambiente == 'HML'){
+        return 'Homologação'
+      }
+      if (params.row.ambiente == 'TST'){
+        return 'Teste'
       }
   }  },
   ];
@@ -49,7 +62,7 @@ export default function ServiceAccounts() {
 
     <div className="home">
     <Head>
-      <title>Contas de serviço</title>
+      <title>Servidores</title>
     </Head>
       <Sidebar />
       <div className="home-container">
