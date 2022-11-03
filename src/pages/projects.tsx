@@ -1,16 +1,15 @@
 import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
-import { useState, useEffect } from "react";
-import { api } from "../../services/api";
+import { useState } from "react";
 import { GridColDef } from "@mui/x-data-grid";
-import { NewAccountModal } from "../components/NewAccountModal";
+import { NewAccountModal } from "../components/AccountModal";
 import Head from 'next/head'
 
 
 
 export default function ServiceAccounts() {
   const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
-  const [projects, setProjects] = useState([]);
+  const apiUrl = '/projetos'
   
 
   function handleOpenNewProjectModal() {
@@ -20,14 +19,6 @@ export default function ServiceAccounts() {
     setIsNewAccountModalOpen(false);
   }
 
-  // Recebendo a resposta da api
-  useEffect(() => {
-    const getProjects = async () => {
-      const { data: res } = await api.get("/projetos");
-      setProjects(res);
-    };
-    getProjects();
-  }, []);
 
   // Definindo colunas
   const columns: GridColDef[] = [
@@ -55,8 +46,8 @@ export default function ServiceAccounts() {
       <div className="home-container">
         <Table
           onOpenNewProjectModal={handleOpenNewProjectModal}
-          props={projects}
           columns={columns}
+          apiUrl={apiUrl}
         />
         <NewAccountModal
           isOpen={isNewAccountModalOpen}

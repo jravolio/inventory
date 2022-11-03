@@ -2,7 +2,7 @@ import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
 import { useState } from "react";
 import { GridColDef } from "@mui/x-data-grid";
-import { NewAccountModal } from "../components/NewAccountModal";
+import { NewAccountModal } from "../components/AccountModal";
 import Head from 'next/head'
 
 
@@ -26,6 +26,7 @@ export default function ServiceAccounts() {
     { field: "descricao", headerName: "Descrição", width: 100 },
     { field: "observacao", headerName: "Observação", width: 200 },
     { field: "empresa", headerName: "Empresa", width: 200, valueGetter: (params) =>{ 
+      // TODO fazer isso ser dinâmico, pegando as empresas via api
       if (params.row.empresa == 1){
       return 'V.tal'
     }

@@ -7,18 +7,13 @@ import { api } from '../../../services/api'
 
 interface TableProps{
   onOpenNewProjectModal: () => void;
-  props: GridRowsProp[];
   columns: GridColDef[];
   apiUrl: string;
 }
 
-interface RowProps{
-  id: number;
-}
-
 
 export function Table({ onOpenNewProjectModal ,columns, apiUrl }: TableProps) {
-  const [clickedRow, setClickedRow] = useState<RowProps>({id:1});
+  const [clickedRow, setClickedRow] = useState({id:1});
   const [projects, setProjects] = useState([]);
   
   // Realizando chamada na api e renderizando a pagina sempre que o componente clickedRow for atualizado
