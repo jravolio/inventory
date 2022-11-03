@@ -11,7 +11,7 @@ import Head from 'next/head'
 export default function ServiceAccounts() {
   const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
   const [projects, setProjects] = useState([]);
-  
+  const apiUrl = '/servidores'
 
   function handleOpenNewProjectModal() {
     setIsNewAccountModalOpen(true);
@@ -23,7 +23,7 @@ export default function ServiceAccounts() {
   // Recebendo a resposta da api
   useEffect(() => {
     const getProjects = async () => {
-      const { data: res } = await api.get("/servidores");
+      const { data: res } = await api.get(apiUrl);
       setProjects(res);
     };
     getProjects();
@@ -70,6 +70,7 @@ export default function ServiceAccounts() {
           onOpenNewProjectModal={handleOpenNewProjectModal}
           props={projects}
           columns={columns}
+          apiUrl={apiUrl}
         />
         <NewAccountModal
           isOpen={isNewAccountModalOpen}
