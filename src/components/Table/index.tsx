@@ -3,19 +3,22 @@ import {DataGrid,GridColDef, GridToolbar, GridRowsProp} from "@mui/x-data-grid";
 import styles from "./styles.module.scss";
 import Button from "@mui/material/Button";
 import { api } from '../../../services/api'
+import { NewAccountModal } from "../AccountModal";
 
 
 interface TableProps{
-  onOpenNewProjectModal: () => void;
   columns: GridColDef[];
   apiUrl: string;
+  handleOpenNewProjectModal: () => void;
+  handleEditButton(event: any, params:any): any;
 }
 
 
-export function Table({ onOpenNewProjectModal ,columns, apiUrl }: TableProps) {
+export function Table({ columns, apiUrl, handleOpenNewProjectModal,handleEditButton }: TableProps) {
   const [clickedRow, setClickedRow] = useState({id:1});
   const [projects, setProjects] = useState([]);
-  
+
+
   // Realizando chamada na api e renderizando a pagina sempre que o componente clickedRow for atualizado
   useEffect(() => {
     const getProjects = async () => {
@@ -33,10 +36,7 @@ export function Table({ onOpenNewProjectModal ,columns, apiUrl }: TableProps) {
     await api.delete(apiUrl + '/' + row.id)
   }
 
-  const handleEditButton = (event: any, row: any) =>{
-    event.stopPropagation()
-    setClickedRow(row);
-  }
+
 
 
   // Coluna de edição e de ações
@@ -56,10 +56,8 @@ export function Table({ onOpenNewProjectModal ,columns, apiUrl }: TableProps) {
             </a>
             </button>
 
-            <button>
-            <a href="/" onClick={(event) => handleEditButton(event, params.row)} style={{ textDecoration: "none" }}>
+            <button onClick={(event) => handleEditButton(event, params.row)}>
               <div className={styles.editButton}>Edit</div>
-            </a>
             </button>
 
             <button onClick={(event) => handleDeleteButton(event, params.row)}>
@@ -77,9 +75,11 @@ export function Table({ onOpenNewProjectModal ,columns, apiUrl }: TableProps) {
       <div className={styles.datatable}>
         <div className={styles.datatableTitle}>
           Dashboard
-          <Button onClick={onOpenNewProjectModal} variant="outlined" color="success">
+
+          <Button onClick={handleOpenNewProjectModal} variant="outlined" color="success">
             Add new
           </Button>
+
         </div>
         <DataGrid
           className="datagrid"

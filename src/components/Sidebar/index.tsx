@@ -30,12 +30,12 @@ export function Sidebar() {
               <span>Servidores</span>
               </a>
             </li>
-            <li>
+            {/* <li>
               <a href="/">
               <FiBook className={styles.icon} />
               <span>Cadastros</span>
               </a>
-            </li>
+            </li> */}
             <li>
               <a href="/">
               <FiFeather className={styles.icon} />

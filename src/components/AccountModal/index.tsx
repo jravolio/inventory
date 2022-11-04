@@ -6,6 +6,7 @@ import { api } from "../../../services/api";
 interface NewAccountModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
+  isAddMode: boolean
 }
 
 interface EmpresaProps{
@@ -15,25 +16,50 @@ interface EmpresaProps{
   observacao: string;
 }
 
-export function NewAccountModal({ isOpen,onRequestClose }: NewAccountModalProps) {
+export function NewAccountModal({ isOpen,onRequestClose, isAddMode }: NewAccountModalProps) {
     const [nome, setNome] = useState('')
     const [descricao,setDescricao] = useState('')
     const [observacao, setObservacao] = useState('')
     const [empresaObjects, setEmpresaObjects] = useState<EmpresaProps[]>([])
     const [empresa, setEmpresa] = useState(1)
+    const [addMode, setAddMode] = useState(isAddMode)
+
+
+
+
+    useEffect(() =>{
+      setAddMode(isAddMode)
+      
+      const setVariablesToZero = () =>{
+        setNome('')
+        setDescricao('')
+        setObservacao('')
+        setEmpresa(1)
+      }
+
+      if (!isAddMode){
+        console.log('ta dentro do if')
+      }
+
+      setVariablesToZero()
+    }, [isAddMode])
 
     useEffect(() => {
 
-      const handleGetCompanies = async () =>{
+      const getCompanies = async () =>{
         const { data } = await api.get('/empresas/')
         setEmpresaObjects(data)
       }
 
-      handleGetCompanies();
+      getCompanies();
     }, []);
     
     
-    function handleCreateNewAccount(event: FormEvent){
+    function handleSubmit(data: FormEvent){
+      return addMode ? createNewAccount(data) : updateAccount(data)
+    }
+
+    function createNewAccount(event: FormEvent){
         event.preventDefault()
         
         const data ={
@@ -43,8 +69,12 @@ export function NewAccountModal({ isOpen,onRequestClose }: NewAccountModalProps)
             empresa
         }
 
-        console.log(data)
         api.post('/contas/', data)
+    }
+
+    function updateAccount(event: FormEvent){
+      event.preventDefault()
+      console.log('veio no update')
     }
 
     const handleSelectCompany = (event:any) =>{
@@ -67,8 +97,8 @@ export function NewAccountModal({ isOpen,onRequestClose }: NewAccountModalProps)
         <CgClose onClick={onRequestClose} />
       </button>
 
-      <form onSubmit={handleCreateNewAccount}>
-        <h2>Adicionar Conta</h2>
+      <form onSubmit={handleSubmit}>
+        <h2>{addMode ? 'Criar conta' : 'Editar usuário'}</h2>
 
         <input 
         placeholder="Nome da Conta"
@@ -100,7 +130,7 @@ export function NewAccountModal({ isOpen,onRequestClose }: NewAccountModalProps)
           })}
           
         </select>
-        <button type="submit">Cadastrar</button>
+        <button type="submit">{addMode ? 'Cadastrar' : 'Editar'}</button>
       </form>
     </Modal>
   );
