@@ -32,7 +32,7 @@ export default function ServiceAccounts() {
   }
 
 
-  console.log(isAddMode + ' Vindo do pages')
+  // console.log(isAddMode + ' Vindo do pages')
 
   const handleEditButton = (event: any, row: any) =>{
     event.stopPropagation()
@@ -47,7 +47,7 @@ export default function ServiceAccounts() {
     { field: "descricao", headerName: "Descrição", width: 100 },
     { field: "observacao", headerName: "Observação", width: 200 },
     { field: "empresa", headerName: "Empresa", width: 200, valueGetter: (params) =>{ 
-      // TODO fazer isso ser dinâmico, pegando as empresas via api
+      // TODO: fazer isso ser dinâmico, pegando as empresas via api
       if (params.row.empresa == 1){
       return 'V.tal'
     }
@@ -77,6 +77,7 @@ export default function ServiceAccounts() {
           isOpen={isNewAccountModalOpen}
           onRequestClose={handleCloseNewProjectModal}
           isAddMode={isAddMode}
+          clickedTableRow={clickedTableRow}
         />
         
       </div>

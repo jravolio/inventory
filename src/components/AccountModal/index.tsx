@@ -3,10 +3,12 @@ import Modal from "react-modal";
 import { FormEvent, useEffect, useState } from 'react'
 import { api } from "../../../services/api";
 
+
 interface NewAccountModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   isAddMode: boolean
+  clickedTableRow: Array<clickedTableProps>
 }
 
 interface EmpresaProps{
@@ -15,16 +17,24 @@ interface EmpresaProps{
   descricao: string;
   observacao: string;
 }
+interface clickedTableProps{
+  id: number;
+  nome: string;
+  descricao: string;
+  observacao: string;
+  empresa: number;
+}
 
-export function NewAccountModal({ isOpen,onRequestClose, isAddMode }: NewAccountModalProps) {
+// TODO: deixar isso dinâmico pra buscar os dados dentro da table
+
+export function NewAccountModal({ isOpen,onRequestClose, isAddMode, clickedTableRow }: NewAccountModalProps) {
     const [nome, setNome] = useState('')
     const [descricao,setDescricao] = useState('')
     const [observacao, setObservacao] = useState('')
     const [empresaObjects, setEmpresaObjects] = useState<EmpresaProps[]>([])
     const [empresa, setEmpresa] = useState(1)
     const [addMode, setAddMode] = useState(isAddMode)
-
-
+    const [clickedTableRowId, setClickedTableRowId] = useState(1)
 
 
     useEffect(() =>{
@@ -37,12 +47,21 @@ export function NewAccountModal({ isOpen,onRequestClose, isAddMode }: NewAccount
         setEmpresa(1)
       }
 
-      if (!isAddMode){
-        console.log('ta dentro do if')
+      const defineMode = (row: clickedTableProps) =>{
+        if (!isAddMode){
+          setNome(row.nome)
+          setDescricao(row.descricao)
+          setObservacao(row.observacao)
+          setEmpresa(row.empresa)
+          setClickedTableRowId(row.id)
+        }
+        else{
+          setVariablesToZero()
+        }
       }
 
-      setVariablesToZero()
-    }, [isAddMode])
+      defineMode(clickedTableRow) // TODO:Entender esse erro
+    }, [clickedTableRow, isAddMode])
 
     useEffect(() => {
 
@@ -59,8 +78,7 @@ export function NewAccountModal({ isOpen,onRequestClose, isAddMode }: NewAccount
       return addMode ? createNewAccount(data) : updateAccount(data)
     }
 
-    function createNewAccount(event: FormEvent){
-        event.preventDefault()
+    async function createNewAccount(event: FormEvent){
         
         const data ={
             nome,
@@ -69,12 +87,20 @@ export function NewAccountModal({ isOpen,onRequestClose, isAddMode }: NewAccount
             empresa
         }
 
-        api.post('/contas/', data)
+        await api.post('/contas/', data)
     }
 
-    function updateAccount(event: FormEvent){
-      event.preventDefault()
-      console.log('veio no update')
+    async function updateAccount(event: FormEvent){
+      
+      const data ={
+        nome,
+        descricao,
+        observacao,
+        empresa
+    }
+
+    console.log(api.put('/contas/' + clickedTableRowId + '/', data))
+    
     }
 
     const handleSelectCompany = (event:any) =>{
@@ -82,7 +108,7 @@ export function NewAccountModal({ isOpen,onRequestClose, isAddMode }: NewAccount
       const optionElement = event.target.childNodes[index];
       const optionElementId = optionElement.getAttribute('id');
 
-      setEmpresa(optionElementId)
+      setEmpresa(Number(optionElementId))
     }
 
     return (
