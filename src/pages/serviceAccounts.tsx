@@ -2,17 +2,10 @@ import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
 import { useContext } from "react";
 import { GridColDef } from "@mui/x-data-grid";
-import { NewAccountModal } from "../components/AccountModal";
+import { AccountModal } from "../components/Modals/AccountModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 
-interface clickedTableProps {
-  id: number;
-  nome: string;
-  observacao: string;
-  descricao: string;
-  empresa: number;
-}
 
 export default function ServiceAccounts() {
   const apiUrl = "/contas";
@@ -55,12 +48,11 @@ export default function ServiceAccounts() {
         <div className="home-container">
           <Table
             columns={columns}
-            apiUrl={apiUrl}
             handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
           />
 
-          <NewAccountModal
+          <AccountModal
             isOpen={isNewAccountModalOpen}
             onRequestClose={handleCloseNewProjectModal}
             isAddMode={isAddMode}

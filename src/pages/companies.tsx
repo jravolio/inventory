@@ -2,7 +2,7 @@ import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
 import { useState } from "react";
 import { GridColDef } from "@mui/x-data-grid";
-import { NewAccountModal } from "../components/AccountModal";
+import { NewAccountModal } from "../components/Modals/AccountModal";
 import Head from 'next/head'
 
 

@@ -1,24 +1,19 @@
 import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
-import { useState } from "react";
+import { useContext } from "react";
 import { GridColDef } from "@mui/x-data-grid";
-import { NewAccountModal } from "../components/AccountModal";
-import Head from 'next/head'
+import { ProjectModal } from "../components/Modals/ProjectModal";
+import Head from "next/head";
+import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 
-
-
-export default function ServiceAccounts() {
-  const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
-  const apiUrl = '/projetos'
-  
-
-  function handleOpenNewProjectModal() {
-    setIsNewAccountModalOpen(true);
-  }
-  function handleCloseNewProjectModal() {
-    setIsNewAccountModalOpen(false);
-  }
-
+export default function Projects() {
+  const apiUrl = "/projetos";
+  const { handleOpenNewProjectModal } = useContext(ProjectsContext);
+  const { handleEditButton } = useContext(ProjectsContext);
+  const { isNewAccountModalOpen } = useContext(ProjectsContext);
+  const { handleCloseNewProjectModal } = useContext(ProjectsContext);
+  const { isAddMode } = useContext(ProjectsContext);
+  const { clickedTableRow } = useContext(ProjectsContext);
 
   // Definindo colunas
   const columns: GridColDef[] = [
@@ -26,34 +21,52 @@ export default function ServiceAccounts() {
     { field: "descricao", headerName: "Descrição", width: 150 },
     { field: "observacao", headerName: "Observação", width: 200 },
     { field: "area_negocio", headerName: "Área de negócio", width: 200 },
-    { field: "tipo", headerName: "Tipo de Projeto", width: 200, valueGetter: (params) =>{ 
-      if (params.row.tipo == 1){
-      return 'V.tal'
-    }
-      else{
-        return'Oi'
-      }
-  }  },
+    {
+      field: "tipo",
+      headerName: "Tipo de Projeto",
+      width: 200,
+      valueGetter: (params) => {
+        if (params.row.tipo == 'A') {
+          return "Ambiente";
+        } 
+        if (params.row.tipo == 'B') {
+          return "Aplicação";
+        } 
+        if (params.row.tipo == 'C') {
+          return "Automação";
+        } 
+        if (params.row.tipo == 'D') {
+          return "RPA Uipath";
+        } 
+        else {
+          return "Não foi possível indentificar";
+        }
+      },
+    },
   ];
 
   return (
+    <ProjectsProvider apiUrl={apiUrl}>
+      <div className="home">
+        <Head>
+          <title>Contas de serviço</title>
+        </Head>
+        <Sidebar />
+        <div className="home-container">
+          <Table
+            columns={columns}
+            handleOpenNewProjectModal={handleOpenNewProjectModal}
+            handleEditButton={handleEditButton}
+          />
 
-    <div className="home">
-    <Head>
-      <title>Contas de serviço</title>
-    </Head>
-      <Sidebar />
-      <div className="home-container">
-        <Table
-          onOpenNewProjectModal={handleOpenNewProjectModal}
-          columns={columns}
-          apiUrl={apiUrl}
-        />
-        <NewAccountModal
-          isOpen={isNewAccountModalOpen}
-          onRequestClose={handleCloseNewProjectModal}
-        />
+          <ProjectModal
+            isOpen={isNewAccountModalOpen}
+            onRequestClose={handleCloseNewProjectModal}
+            isAddMode={isAddMode}
+            clickedTableRow={clickedTableRow}
+          />
+        </div>
       </div>
-    </div>
+    </ProjectsProvider>
   );
 }

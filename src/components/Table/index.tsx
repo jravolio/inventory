@@ -9,13 +9,12 @@ import { ProjectsContext } from "../../ProjectsContext";
 
 interface TableProps{
   columns: GridColDef[];
-  apiUrl: string;
   handleOpenNewProjectModal: () => void;
   handleEditButton(event: any, params:any): any;
 }
 
 
-export function Table({ columns, apiUrl, handleOpenNewProjectModal,handleEditButton }: TableProps) {
+export function Table({ columns, handleOpenNewProjectModal,handleEditButton }: TableProps) {
   const { projects } = useContext(ProjectsContext)
   const { handleDeleteButton } = useContext(ProjectsContext)
 

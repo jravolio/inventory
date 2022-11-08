@@ -26,7 +26,7 @@ interface ProjectsContextData{
     handleOpenNewProjectModal: () => void;
     handleCloseNewProjectModal: () => void;
     sucessToastMessage: () => void;
-    errorToastMessage: () => void;
+    errorToastMessage: (error: any) => void;
     handleDeleteButton: (event: any, row: any) => void
     handleEditButton: (event: any, row: any) => void;
 }
@@ -36,25 +36,24 @@ export const ProjectsContext = createContext<ProjectsContextData>(
 )
 
 export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
-    const [clickedRow, setClickedRow] = useState([]);
     const [projects, setProjects] = useState([]);
     const [clickedTableRow, setClickedTableRow] = useState<clickedTableProps[]>([]);
     const [isAddMode, setIsAddMode] = useState(true);
     const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
     
-    // Realizando chamada na api e renderizando a pagina sempre que o componente clickedRow for atualizado
+    // Realizando chamada na api e renderizando a pagina sempre que o componente clickedTableRow for atualizado
     useEffect(() => {
       const getProjects = async () => {
         const { data } = await api.get(apiUrl);
         setProjects(data);
       };
-  
+      
       getProjects();
-    }, [clickedRow]);
+    }, [clickedTableRow]);
 
     async function handleDeleteButton( event: any, row: any ) {
         event.stopPropagation()
-        setClickedRow(row);
+        setClickedTableRow(row);
         await api.delete(apiUrl + '/' + row.id)
       }
 
@@ -93,7 +92,7 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
             });
     }
 
-    function errorToastMessage(){
+    function errorToastMessage(error: any){
         toast.error('Ocorreu um erro na requisição!', {
             position: "top-center",
             autoClose: 3000,
@@ -104,6 +103,8 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
             progress: undefined,
             theme: "light",
             });
+
+        console.log(error)
     }
 
     return(

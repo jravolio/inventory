@@ -2,12 +2,12 @@ import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
 import { useContext } from "react";
 import { GridColDef } from "@mui/x-data-grid";
-import { NewAccountModal } from "../components/AccountModal";
+import { ServerModal } from "../components/Modals/ServerModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 
 
-export default function ServiceAccounts() {
+export default function Servers() {
   const apiUrl = "/servidores";
   const { handleOpenNewProjectModal } = useContext(ProjectsContext)
   const { handleEditButton } = useContext(ProjectsContext)
@@ -54,6 +54,19 @@ export default function ServiceAccounts() {
         }
       },
     },
+    {
+      field: "empresa",
+      headerName: "Empresa",
+      width: 200,
+      valueGetter: (params) => {
+        // TODO: fazer isso ser dinâmico, pegando as empresas via api
+        if (params.row.empresa == 1) {
+          return "V.tal";
+        } else {
+          return "Oi";
+        }
+      },
+    },
   ];
 
   return (
@@ -66,12 +79,11 @@ export default function ServiceAccounts() {
         <div className="home-container">
           <Table
             columns={columns}
-            apiUrl={apiUrl}
             handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
           />
 
-          <NewAccountModal
+          <ServerModal
             isOpen={isNewAccountModalOpen}
             onRequestClose={handleCloseNewProjectModal}
             isAddMode={isAddMode}

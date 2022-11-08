@@ -1,8 +1,8 @@
 import { CgClose } from "react-icons/cg";
 import Modal from "react-modal";
 import { FormEvent, useContext, useEffect, useState } from "react";
-import { api } from "../../../services/api";
-import { ProjectsContext } from "../../ProjectsContext";
+import { api } from "../../../../services/api";
+import { ProjectsContext } from "../../../ProjectsContext";
 
 interface NewAccountModalProps {
   isOpen: boolean;
@@ -27,7 +27,7 @@ interface clickedTableProps {
 
 // TODO: deixar isso dinâmico pra buscar os dados dentro da table
 
-export function NewAccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
+export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [observacao, setObservacao] = useState("");
@@ -38,18 +38,19 @@ export function NewAccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRo
   const { getApiResponse } = useContext(ProjectsContext)
   const { sucessToastMessage } = useContext(ProjectsContext)
   const { errorToastMessage } = useContext(ProjectsContext)
+  const apiUrl = "/contas/"
   
 
+  
+      const setVariablesToZero = () => {
+        setNome("");
+        setDescricao("");
+        setObservacao("");
+        setEmpresa(1);
+      };
 
   useEffect(() => {
     setAddMode(isAddMode);
-
-    const setVariablesToZero = () => {
-      setNome("");
-      setDescricao("");
-      setObservacao("");
-      setEmpresa(1);
-    };
 
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
@@ -63,7 +64,7 @@ export function NewAccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRo
       }
     };
 
-    defineMode(clickedTableRow); // TODO:Entender esse erro
+    defineMode(clickedTableRow);
   }, [clickedTableRow, isAddMode]);
 
   useEffect(() => {
@@ -91,14 +92,12 @@ export function NewAccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRo
 
     
     await api
-      .post("/contas/", data)
+      .post(apiUrl, data)
       .then(() => sucessToastMessage())
-      .catch((error) => errorToastMessage())
+      .catch((error) => errorToastMessage(error))
 
-    setNome("");
-    setDescricao("");
-    setObservacao("");
-    setEmpresa(1);
+    
+    setVariablesToZero()
 
     getApiResponse() // apenas para atualizar o grid
 
@@ -116,13 +115,12 @@ export function NewAccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRo
     };
 
     await api
-      .put("/contas/" + clickedTableRowId + "/", data)
+      .put(apiUrl + clickedTableRowId + "/", data)
+      .then(() => sucessToastMessage())
+      .catch((error) => errorToastMessage(error))
 
-      
-      setNome("");
-      setDescricao("");
-      setObservacao("");
-      setEmpresa(1);
+
+      setVariablesToZero()
   
       getApiResponse() // apenas para atualizar o grid
   
