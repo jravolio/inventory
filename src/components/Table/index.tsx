@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import {DataGrid,GridColDef, GridToolbar, GridRowsProp} from "@mui/x-data-grid";
 import styles from "./styles.module.scss";
 import Button from "@mui/material/Button";
-import { api } from '../../../services/api'
-import { NewAccountModal } from "../AccountModal";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ProjectsContext } from "../../ProjectsContext";
 
 
 interface TableProps{
@@ -15,28 +16,8 @@ interface TableProps{
 
 
 export function Table({ columns, apiUrl, handleOpenNewProjectModal,handleEditButton }: TableProps) {
-  const [clickedRow, setClickedRow] = useState({id:1});
-  const [projects, setProjects] = useState([]);
-
-
-  // Realizando chamada na api e renderizando a pagina sempre que o componente clickedRow for atualizado
-  useEffect(() => {
-    const getProjects = async () => {
-      const { data } = await api.get(apiUrl);
-      setProjects(data);
-    };
-
-    getProjects();
-  }, [clickedRow]);
-
-
-  const handleDeleteButton = async ( event: any, row: any ) =>{
-    event.stopPropagation()
-    setClickedRow(row);
-    await api.delete(apiUrl + '/' + row.id)
-  }
-
-
+  const { projects } = useContext(ProjectsContext)
+  const { handleDeleteButton } = useContext(ProjectsContext)
 
 
   // Coluna de edição e de ações
@@ -80,18 +61,19 @@ export function Table({ columns, apiUrl, handleOpenNewProjectModal,handleEditBut
             Add new
           </Button>
 
+
         </div>
         <DataGrid
           className="datagrid"
           getRowId={(row) => row.id}
           rows={projects}
           columns={columns.concat(actionColumn)}
-          pageSize={9}
-          rowsPerPageOptions={[9]}
-          checkboxSelection
+          pageSize={13}
+          rowsPerPageOptions={[13]}
           components={{ Toolbar: GridToolbar }}
         />
 
+        <ToastContainer />
 
       </div>
   );

@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app'
 import { createServer, Model } from 'miragejs'
 import '../styles/global.scss'
-
+import { ProjectsProvider } from '../ProjectsContext'
 
 // createServer({
 
@@ -52,7 +52,11 @@ import '../styles/global.scss'
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <ProjectsProvider apiUrl='/inventario/all'>
+      <Component {...pageProps} />
+    </ProjectsProvider>
+    )
 }
 
 export default MyApp
