@@ -48,8 +48,8 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
     setNome("");
     setDescricao("");
     setObservacao("");
-    setAmbiente("");
-    setTipo("");
+    setAmbiente("PRD");
+    setTipo("A");
     setEmpresa(1);
   };
 
@@ -93,10 +93,10 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
     const data = {
       nome,
       descricao,
-      observacao,
-      empresa,
       tipo,
       ambiente,
+      observacao,
+      empresa,
     };
 
     
@@ -119,6 +119,8 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
     const data = {
       nome,
       descricao,
+      tipo,
+      ambiente,
       observacao,
       empresa,
     };
@@ -130,7 +132,6 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
 
       
       setVariablesToZero()
-
   
       getApiResponse() // apenas para atualizar o grid
   

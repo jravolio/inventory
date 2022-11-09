@@ -135,7 +135,7 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar conta" : "Editar usuário"}</h2>
+        <h2>{addMode ? "Criar Projeto" : "Editar Projeto"}</h2>
 
         <input
           placeholder="Nome da Conta"

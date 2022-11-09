@@ -8,6 +8,7 @@ import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 
 export default function Projects() {
   const apiUrl = "/projetos";
+  const tableName = 'Projetos'
   const { handleOpenNewProjectModal } = useContext(ProjectsContext);
   const { handleEditButton } = useContext(ProjectsContext);
   const { isNewAccountModalOpen } = useContext(ProjectsContext);
@@ -49,7 +50,7 @@ export default function Projects() {
     <ProjectsProvider apiUrl={apiUrl}>
       <div className="home">
         <Head>
-          <title>Contas de serviço</title>
+          <title>Projetos</title>
         </Head>
         <Sidebar />
         <div className="home-container">
@@ -57,6 +58,7 @@ export default function Projects() {
             columns={columns}
             handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
+            tableName={tableName}
           />
 
           <ProjectModal

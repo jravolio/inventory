@@ -9,6 +9,7 @@ import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 
 export default function Servers() {
   const apiUrl = "/servidores";
+  const tableName = 'Servidores'
   const { handleOpenNewProjectModal } = useContext(ProjectsContext)
   const { handleEditButton } = useContext(ProjectsContext)
   const { isNewAccountModalOpen } = useContext(ProjectsContext)
@@ -73,7 +74,7 @@ export default function Servers() {
     <ProjectsProvider apiUrl={apiUrl}>
       <div className="home">
         <Head>
-          <title>Contas de serviço</title>
+          <title>Servidores</title>
         </Head>
         <Sidebar />
         <div className="home-container">
@@ -81,6 +82,7 @@ export default function Servers() {
             columns={columns}
             handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
+            tableName={tableName}
           />
 
           <ServerModal

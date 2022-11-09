@@ -9,6 +9,7 @@ import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 
 export default function ServiceAccounts() {
   const apiUrl = "/contas";
+  const tableName = 'Contas de serviço'
   const { handleOpenNewProjectModal } = useContext(ProjectsContext)
   const { handleEditButton } = useContext(ProjectsContext)
   const { isNewAccountModalOpen } = useContext(ProjectsContext)
@@ -21,8 +22,8 @@ export default function ServiceAccounts() {
   // Definindo colunas
   const columns: GridColDef[] = [
     { field: "nome", headerName: "Conta", width: 200 },
-    { field: "descricao", headerName: "Descrição", width: 100 },
-    { field: "observacao", headerName: "Observação", width: 200 },
+    { field: "descricao", headerName: "Descrição", width: 300 },
+    { field: "observacao", headerName: "Observação", width: 300 },
     {
       field: "empresa",
       headerName: "Empresa",
@@ -44,12 +45,12 @@ export default function ServiceAccounts() {
         <Head>
           <title>Contas de serviço</title>
         </Head>
-        <Sidebar />
         <div className="home-container">
           <Table
             columns={columns}
             handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
+            tableName={tableName}
           />
 
           <AccountModal

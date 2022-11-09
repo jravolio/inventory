@@ -25,7 +25,6 @@ interface clickedTableProps {
   empresa: number;
 }
 
-// TODO: deixar isso dinâmico pra buscar os dados dentro da table
 
 export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
   const [nome, setNome] = useState("");

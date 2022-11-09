@@ -31,6 +31,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   const [descricao, setDescricao] = useState("");
   const [observacao, setObservacao] = useState("");
   const [empresaObjects, setEmpresaObjects] = useState<EmpresaProps[]>([]);
+  // const [projectsObjects, setProjectsObjects] = useState<>([])
   const [empresa, setEmpresa] = useState(1);
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
@@ -51,6 +52,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     };
 
     const defineMode = (row: clickedTableProps) => {
+      console.log(clickedTableRow)
       if (!isAddMode) {
         setNome(row.nome);
         setDescricao(row.descricao);
@@ -66,12 +68,15 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   }, [clickedTableRow, isAddMode]);
 
   useEffect(() => {
-    const getCompanies = async () => {
-      const { data } = await api.get("/empresas/");
-      setEmpresaObjects(data);
+    const getApiResponse = async (apiUrl: any, setState: any) => {
+      const { data } = await api.get(apiUrl);
+      setState(data);
     };
 
-    getCompanies();
+    getApiResponse('/empresas/', setEmpresaObjects)
+    // getApiResponse('/projetos/', setProjectsObjects)
+    console.log(empresaObjects)
+    
   }, []);
 
   function handleSubmit(data: FormEvent) {
@@ -129,12 +134,40 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       onRequestClose();
   }
 
+  const handleSelectProject = (event: any) => {
+    const index = event.target.selectedIndex;
+    const optionElement = event.target.childNodes[index];
+    const optionElementId = optionElement.getAttribute("id");
+
+    setEmpresa(Number(optionElementId));
+    console.log(empresa)
+  };
+
+  const handleSelectAccount = (event: any) => {
+    const index = event.target.selectedIndex;
+    const optionElement = event.target.childNodes[index];
+    const optionElementId = optionElement.getAttribute("id");
+
+    setEmpresa(Number(optionElementId));
+    console.log(empresa)
+  };
+
+  const handleSelectIntegration = (event: any) => {
+    const index = event.target.selectedIndex;
+    const optionElement = event.target.childNodes[index];
+    const optionElementId = optionElement.getAttribute("id");
+
+    setEmpresa(Number(optionElementId));
+    console.log(empresa)
+  };
+
   const handleSelectCompany = (event: any) => {
     const index = event.target.selectedIndex;
     const optionElement = event.target.childNodes[index];
     const optionElementId = optionElement.getAttribute("id");
 
     setEmpresa(Number(optionElementId));
+    console.log(empresa)
   };
 
   return (
@@ -150,28 +183,21 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar conta" : "Editar usuário"}</h2>
+        <h2>{addMode ? "Criar item" : "Editar item"}</h2>
+        <hr />
 
-        <input
-          placeholder="Nome da Conta"
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
+        <select
           className="react-modal-options"
-        />
-
-        <textarea
-          placeholder="Descrição"
-          value={descricao}
-          onChange={(event) => setDescricao(event.target.value)}
-          className="react-modal-options"
-        />
-
-        <textarea
-          placeholder="Observação"
-          value={observacao}
-          onChange={(event) => setObservacao(event.target.value)}
-          className="react-modal-options"
-        />
+          onChange={(event) => handleSelectProject(event)}
+        >
+          {empresaObjects.map((item) => {
+            return (
+              <option id={item.id.toString()} key={item.id}>
+                {item.nome}
+              </option>
+            );
+          })}
+        </select>
 
         <select
           className="react-modal-options"
@@ -185,6 +211,33 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
             );
           })}
         </select>
+
+        <select
+          className="react-modal-options"
+          onChange={(event) => handleSelectCompany(event)}
+        >
+          {empresaObjects.map((item) => {
+            return (
+              <option id={item.id.toString()} key={item.id}>
+                {item.nome}
+              </option>
+            );
+          })}
+        </select>
+
+        <select
+          className="react-modal-options"
+          onChange={(event) => handleSelectCompany(event)}
+        >
+          {empresaObjects.map((item) => {
+            return (
+              <option id={item.id.toString()} key={item.id}>
+                {item.nome}
+              </option>
+            );
+          })}
+        </select>
+
         <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
       </form>
     </Modal>

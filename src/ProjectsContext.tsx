@@ -43,18 +43,19 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
     
     // Realizando chamada na api e renderizando a pagina sempre que o componente clickedTableRow for atualizado
     useEffect(() => {
-      const getProjects = async () => {
-        const { data } = await api.get(apiUrl);
-        setProjects(data);
-      };
+      getApiResponse()
       
-      getProjects();
     }, [clickedTableRow]);
 
     async function handleDeleteButton( event: any, row: any ) {
         event.stopPropagation()
         setClickedTableRow(row);
-        await api.delete(apiUrl + '/' + row.id)
+        if(apiUrl == '/inventario/all/'){
+          await api.delete('/inventarios/' + row.id)
+          getApiResponse() //chamar denovo pra atualizar grid ?/
+        } else{
+          await api.delete(apiUrl + '/' + row.id)
+        }
       }
 
       function handleEditButton(event: any, row: any) {
