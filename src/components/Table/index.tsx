@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import {DataGrid,GridColDef, GridToolbar, GridRowsProp} from "@mui/x-data-grid";
+import {DataGrid,GridColDef, GridToolbar, GridRowsProp, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton} from "@mui/x-data-grid";
 import styles from "./styles.module.scss";
 import Button from "@mui/material/Button";
 import { ToastContainer } from 'react-toastify';
@@ -47,16 +47,26 @@ export function Table({ columns, handleEditButton }: TableProps) {
     },
   ];
 
+  function CustomToolbar() {
+    return (
+      <GridToolbarContainer color="#f2f2f2">
+        <GridToolbarColumnsButton color="inherit"/>
+        <GridToolbarFilterButton color="inherit"/>
+        <GridToolbarDensitySelector color="inherit"/>
+        <GridToolbarExport color="inherit"/>
+      </GridToolbarContainer>
+    );
+  }
   return (
       <div className={styles.datatable}>
         <DataGrid
-          className="datagrid"
+          className={styles.datagrid}
           getRowId={(row) => row.id}
           rows={projects}
           columns={columns.concat(actionColumn)}
           pageSize={13}
           rowsPerPageOptions={[13]}
-          components={{ Toolbar: GridToolbar }}
+          components={{ Toolbar: CustomToolbar }}
           localeText={{
             toolbarColumns: 'Colunas',
             toolbarColumnsLabel: 'Selecionar Colunas',

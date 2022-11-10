@@ -112,11 +112,13 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
     setOpen(false);
   };
 
+  
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{backgroundColor: '#464643'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -152,7 +154,11 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={open} PaperProps={{
+        sx:{
+          backgroundColor: '#757573'
+        }
+      }}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -185,10 +191,10 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                       justifyContent: "center",
                     }}
                   >
-                    <HomeRoundedIcon />
+                    <HomeRoundedIcon sx={{color: '#f1ff00'}} />
                   </ListItemIcon>
                 </Tooltip>
-                <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0, color: '#f2f2f2' }} />
               </ListItemButton>
             </a>
           </ListItem>
@@ -213,12 +219,12 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                       justifyContent: "center",
                     }}
                   >
-                    <SupervisorAccountRoundedIcon />
+                    <SupervisorAccountRoundedIcon sx={{color: '#f1ff00'}} />
                   </ListItemIcon>
                 </Tooltip>
                 <ListItemText
                   primary="Contas de serviço"
-                  sx={{ opacity: open ? 1 : 0 }}
+                  sx={{ opacity: open ? 1 : 0, color: '#f2f2f2'}}
                 />
               </ListItemButton>
             </a>
@@ -244,12 +250,12 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                       justifyContent: "center",
                     }}
                   >
-                    <TerminalRoundedIcon />
+                    <TerminalRoundedIcon sx={{color: '#f1ff00'}} />
                   </ListItemIcon>
                 </Tooltip>
                 <ListItemText
                   primary="Projetos"
-                  sx={{ opacity: open ? 1 : 0 }}
+                  sx={{ opacity: open ? 1 : 0, color: '#f2f2f2' }}
                 />
               </ListItemButton>
             </a>
@@ -276,12 +282,12 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                       justifyContent: "center",
                     }}
                   >
-                    <DnsRoundedIcon />
+                    <DnsRoundedIcon sx={{color: '#f1ff00'}} />
                   </ListItemIcon>
                 </Tooltip>
                 <ListItemText
                   primary="Servidores"
-                  sx={{ opacity: open ? 1 : 0 }}
+                  sx={{ opacity: open ? 1 : 0, color: '#f2f2f2' }}
                 />
               </ListItemButton>
             </a>
@@ -307,12 +313,12 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                       justifyContent: "center",
                     }}
                   >
-                    <AccountTreeRoundedIcon />
+                    <AccountTreeRoundedIcon sx={{color: '#f1ff00'}} />
                   </ListItemIcon>
                 </Tooltip>
                 <ListItemText
                   primary="Integrações"
-                  sx={{ opacity: open ? 1 : 0 }}
+                  sx={{ opacity: open ? 1 : 0, color: '#f2f2f2' }}
                 />
               </ListItemButton>
             </a>
@@ -338,12 +344,12 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                       justifyContent: "center",
                     }}
                   >
-                    <ApartmentRoundedIcon />
+                    <ApartmentRoundedIcon sx={{color: '#f1ff00'}} />
                   </ListItemIcon>
                 </Tooltip>
                 <ListItemText
                   primary="Empresas"
-                  sx={{ opacity: open ? 1 : 0 }}
+                  sx={{ opacity: open ? 1 : 0, color: '#f2f2f2' }}
                 />
               </ListItemButton>
             </a>

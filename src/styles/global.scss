@@ -4,8 +4,13 @@
   box-sizing: border-box;
 }
 
+:root{
+  --primary-color-1: #191918;
+}
+
 body {
   font-family: "Montserrat", sans-serif;
+  background-color: var(--primary-color-1);
 }
 
 .home {
