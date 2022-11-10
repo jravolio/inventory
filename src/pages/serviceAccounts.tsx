@@ -45,12 +45,14 @@ export default function ServiceAccounts() {
         <Head>
           <title>Contas de serviço</title>
         </Head>
+        <Sidebar 
+        tableName={tableName}
+        handleOpenNewProjectModal={handleOpenNewProjectModal}
+        />
         <div className="home-container">
           <Table
             columns={columns}
-            handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
-            tableName={tableName}
           />
 
           <AccountModal

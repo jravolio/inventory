@@ -76,13 +76,14 @@ export default function Servers() {
         <Head>
           <title>Servidores</title>
         </Head>
-        <Sidebar />
+        <Sidebar
+          tableName={tableName}
+          handleOpenNewProjectModal={handleOpenNewProjectModal} 
+        />
         <div className="home-container">
           <Table
             columns={columns}
-            handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
-            tableName={tableName}
           />
 
           <ServerModal

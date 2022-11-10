@@ -11,13 +11,11 @@ import { Sidebar } from "../Sidebar";
 
 interface TableProps{
   columns: GridColDef[];
-  handleOpenNewProjectModal: () => void;
   handleEditButton(event: any, params:any): any;
-  tableName: string
 }
 
 
-export function Table({ columns, handleOpenNewProjectModal,handleEditButton, tableName }: TableProps) {
+export function Table({ columns, handleEditButton }: TableProps) {
   const { projects } = useContext(ProjectsContext)
   const { handleDeleteButton } = useContext(ProjectsContext)
 
@@ -51,16 +49,6 @@ export function Table({ columns, handleOpenNewProjectModal,handleEditButton, tab
 
   return (
       <div className={styles.datatable}>
-        <div className={styles.datatableTitle}>
-          <Sidebar />
-          {tableName}
-          
-          <Button onClick={handleOpenNewProjectModal} variant="outlined" color="success">
-            Adicionar
-          </Button>
-
-
-        </div>
         <DataGrid
           className="datagrid"
           getRowId={(row) => row.id}

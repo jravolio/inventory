@@ -52,13 +52,14 @@ export default function Projects() {
         <Head>
           <title>Projetos</title>
         </Head>
-        <Sidebar />
+        <Sidebar 
+          tableName={tableName}
+          handleOpenNewProjectModal={handleOpenNewProjectModal} 
+        />
         <div className="home-container">
           <Table
             columns={columns}
-            handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
-            tableName={tableName}
           />
 
           <ProjectModal

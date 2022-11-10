@@ -52,12 +52,14 @@ export default function Home() {
         <Head>
           <title>Inventário</title>
         </Head>
+        <Sidebar 
+        tableName={tableName}
+        handleOpenNewProjectModal={handleOpenNewProjectModal}
+        />
         <div className="home-container">
           <Table
             columns={columns}
-            handleOpenNewProjectModal={handleOpenNewProjectModal}
             handleEditButton={handleEditButton}
-            tableName={tableName}
           />
 
           <InventoryModal
