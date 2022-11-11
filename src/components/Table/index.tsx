@@ -49,7 +49,7 @@ export function Table({ columns, handleEditButton }: TableProps) {
 
   function CustomToolbar() {
     return (
-      <GridToolbarContainer color="#f2f2f2">
+      <GridToolbarContainer>
         <GridToolbarColumnsButton color="inherit"/>
         <GridToolbarFilterButton color="inherit"/>
         <GridToolbarDensitySelector color="inherit"/>

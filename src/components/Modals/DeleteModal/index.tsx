@@ -11,37 +11,46 @@ interface NewAccountModalProps {
   clickedTableRow: any
 }
 
-
+interface EmpresaProps {
+  id: number;
+  nome: string;
+  descricao: string;
+  observacao: string;
+}
 interface clickedTableProps {
   id: number;
   nome: string;
   descricao: string;
   observacao: string;
   empresa: number;
-  area_negocio: string
   tipo: string
+  ambiente: string
 }
 
+// TODO: deixar isso dinâmico pra buscar os dados dentro da table
 
-export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
+export function DeleteModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [area_negocio, setArea_negocio] = useState(""); // ME DESCULPEM PRECISO QUE FIQUE ASSIM POR CONTA DA API :(
   const [tipo, setTipo] = useState("")
+  const [ambiente, setAmbiente] = useState("")
   const [observacao, setObservacao] = useState("");
+  const [empresaObjects, setEmpresaObjects] = useState<EmpresaProps[]>([]);
+  const [empresa, setEmpresa] = useState(1);
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
   const { getApiResponse } = useContext(ProjectsContext)
   const { sucessToastMessage } = useContext(ProjectsContext)
   const { errorToastMessage } = useContext(ProjectsContext)
-  const apiUrl = '/projetos/'
+  const apiUrl = "/servidores/"
 
   const setVariablesToZero = () => {
-    setNome("")
-    setDescricao("")
-    setArea_negocio("")
-    setTipo("")
-    setObservacao("")
+    setNome("");
+    setDescricao("");
+    setObservacao("");
+    setAmbiente("PRD");
+    setTipo("A");
+    setEmpresa(1);
   };
 
   useEffect(() => {
@@ -53,8 +62,9 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
         setNome(row.nome);
         setDescricao(row.descricao);
         setObservacao(row.observacao);
-        setArea_negocio(row.area_negocio)
+        setEmpresa(row.empresa);
         setTipo(row.tipo)
+        setAmbiente(row.ambiente)
         setClickedTableRowId(row.id);
       } else {
         setVariablesToZero();
@@ -64,7 +74,14 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     defineMode(clickedTableRow);
   }, [clickedTableRow, isAddMode]);
 
+  useEffect(() => {
+    const getCompanies = async () => {
+      const { data } = await api.get("/empresas/");
+      setEmpresaObjects(data);
+    };
 
+    getCompanies();
+  }, []);
 
   function handleSubmit(data: FormEvent) {
     return addMode ? createNewAccount(data) : updateAccount(data);
@@ -76,10 +93,12 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     const data = {
       nome,
       descricao,
-      area_negocio,
       tipo,
+      ambiente,
       observacao,
+      empresa,
     };
+
     
     await api
       .post(apiUrl, data)
@@ -100,17 +119,18 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     const data = {
       nome,
       descricao,
-      area_negocio,
       tipo,
+      ambiente,
       observacao,
+      empresa,
     };
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
       .then(() => sucessToastMessage())
       .catch((error) => errorToastMessage(error))
-      
 
+      
       setVariablesToZero()
   
       getApiResponse() // apenas para atualizar o grid
@@ -118,8 +138,20 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       onRequestClose();
   }
 
+  const handleSelectCompany = (event: any) => {
+    const index = event.target.selectedIndex;
+    const optionElement = event.target.childNodes[index];
+    const optionElementId = optionElement.getAttribute("id");
+
+    setEmpresa(Number(optionElementId));
+  };
+
   const handleSelectType = (event: any) =>{
     setTipo(event.target.value)
+  }
+
+  const handleSelectAmbient = (event: any) =>{
+    setAmbiente(event.target.value)
   }
 
   return (
@@ -135,10 +167,10 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar Projeto" : "Editar Projeto"}</h2>
+        <h2>{addMode ? "Criar servidor" : "Editar servidor"}</h2>
 
         <input
-          placeholder="Nome da Conta"
+          placeholder="Nome do servidor"
           value={nome}
           onChange={(event) => setNome(event.target.value)}
           className="react-modal-options"
@@ -151,34 +183,47 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
           className="react-modal-options"
         />
 
+        <select
+          className="react-modal-options"
+          onChange={(event) => handleSelectType(event)}
+          value={tipo}
+        >
+          <option value="A">Servidor Aplicacional</option>
+          <option value="B">Banco de Dados</option>
+        </select>
+
+        <select
+          className="react-modal-options"
+          onChange={(event) => handleSelectAmbient(event)}
+          value={ambiente}
+        >
+          <option value="PRD">Produção</option>
+          <option value="DEV">Desenvolvimento</option>
+          <option value="HML">Homologação</option>
+          <option value="TST">Teste</option>
+
+        </select>
+
         <textarea
           placeholder="Observação"
           value={observacao}
           onChange={(event) => setObservacao(event.target.value)}
           className="react-modal-options"
         />
-        
-        <input
-          placeholder="Área de negócio"
-          value={area_negocio}
-          onChange={(event) => setArea_negocio(event.target.value)}
-          className="react-modal-options"
-        />
 
-
-        
         <select
           className="react-modal-options"
-          onChange={(event) => handleSelectType(event)}
-          value={tipo}
+          onChange={(event) => handleSelectCompany(event)}
+          value={empresa}
         >
-          <option value="A">Ambiente</option>
-          <option value="B">Aplicacao</option>
-          <option value="C">Automação</option>
-          <option value="D">RPA Uipath</option>
+          {empresaObjects.map((item) => {
+            return (
+              <option id={item.id.toString()} value={item.id} key={item.id}>
+                {item.nome}
+              </option>
+            );
+          })}
         </select>
-
-
         <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
       </form>
     </Modal>
