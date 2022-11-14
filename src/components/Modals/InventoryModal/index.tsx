@@ -11,6 +11,36 @@ interface NewAccountModalProps {
   clickedTableRow: any
 }
 
+interface ProjetoProps {
+  id: number;
+  nome: string;
+  descricao: string;
+  area_negocio: string;
+  observacao: string;
+  tipo: string;
+}
+interface IntegrationProps {
+  id: number;
+  nome: string;
+  descricao: string;
+  observacao: string;
+}
+interface AccountProps {
+  id: number;
+  nome: string;
+  descricao: string;
+  observacao: string;
+  empresa: number;
+}
+interface ServerProps {
+  id: number;
+  nome: string;
+  descricao: string;
+  tipo: string;
+  ambiente: string;
+  observacao: string;
+  empresa: number;
+}
 interface EmpresaProps {
   id: number;
   nome: string;
@@ -23,15 +53,23 @@ interface clickedTableProps {
   descricao: string;
   observacao: string;
   empresa: number;
+  conta_servico: AccountProps
+  projeto: ProjetoProps
+  integracao: IntegrationProps
+  servidor: ServerProps
 }
 
 
 export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
-  const [nome, setNome] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [observacao, setObservacao] = useState("");
   const [empresaObjects, setEmpresaObjects] = useState<EmpresaProps[]>([]);
-  // const [projectsObjects, setProjectsObjects] = useState<>([])
+  const [projectsObjects, setProjectsObjects] = useState<ProjetoProps[]>([])
+  const [integrationObjects, setIntegrationObjects] = useState<IntegrationProps[]>([])
+  const [serverObjects, setServerObjects] = useState<ServerProps[]>([])
+  const [accountObjects, setAccountObjects] = useState<AccountProps[]>([])
+  const [projeto, setProjeto] = useState(1)
+  const [conta_servico, setConta_servico] = useState(1)
+  const [integracao, setIntegracao] = useState(1)
+  const [servidor, setServidor] = useState(1)
   const [empresa, setEmpresa] = useState(1);
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
@@ -40,23 +78,25 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   const { errorToastMessage } = useContext(ProjectsContext)
   
 
+  const setVariablesToZero = () => {
+    setProjeto(1);
+    setIntegracao(1);
+    setServidor(1);
+    setConta_servico(1)
+    setEmpresa(1);
+  };
 
   useEffect(() => {
     setAddMode(isAddMode);
 
-    const setVariablesToZero = () => {
-      setNome("");
-      setDescricao("");
-      setObservacao("");
-      setEmpresa(1);
-    };
 
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
-        setNome(row.nome);
-        setDescricao(row.descricao);
-        setObservacao(row.observacao);
-        setEmpresa(row.empresa);
+        setProjeto(row.projeto.id);
+        setIntegracao(row.integracao.id);
+        setServidor(row.servidor.id);
+        setConta_servico(row.conta_servico.id);
+        setEmpresa(row.conta_servico.empresa);
         setClickedTableRowId(row.id);
       } else {
         setVariablesToZero();
@@ -72,6 +112,10 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       setState(data);
     };
 
+    getApiResponse('/projetos/', setProjectsObjects)
+    getApiResponse('/integracoes/', setIntegrationObjects)
+    getApiResponse('/servidores/', setServerObjects)
+    getApiResponse('/contas/', setAccountObjects)
     getApiResponse('/empresas/', setEmpresaObjects)
   }, []);
 
@@ -83,22 +127,20 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     event.preventDefault();
 
     const data = {
-      nome,
-      descricao,
-      observacao,
+      projeto,
+      integracao,
+      servidor,
+      conta_servico,
       empresa,
     };
 
     
     await api
-      .post("/contas/", data)
+      .post("/inventarios/", data)
       .then(() => sucessToastMessage())
       .catch((error) => errorToastMessage(error))
 
-    setNome("");
-    setDescricao("");
-    setObservacao("");
-    setEmpresa(1);
+    setVariablesToZero()
 
     getApiResponse() // apenas para atualizar o grid
 
@@ -109,21 +151,19 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     event.preventDefault();
 
     const data = {
-      nome,
-      descricao,
-      observacao,
+      projeto,
+      integracao,
+      servidor,
+      conta_servico,
       empresa,
     };
 
     await api
-      .put("/contas/" + clickedTableRowId + "/", data)
+      .put("/inventarios/" + clickedTableRowId + "/", data)
       .then(() => sucessToastMessage())
       .catch((error) => errorToastMessage(error))
       
-      setNome("");
-      setDescricao("");
-      setObservacao("");
-      setEmpresa(1);
+      setVariablesToZero()
   
       getApiResponse() // apenas para atualizar o grid
   
@@ -135,7 +175,23 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     const optionElement = event.target.childNodes[index];
     const optionElementId = optionElement.getAttribute("id");
 
-    setEmpresa(Number(optionElementId));
+    setProjeto(Number(optionElementId));
+  };
+  
+  const handleSelectIntegration = (event: any) => {
+    const index = event.target.selectedIndex;
+    const optionElement = event.target.childNodes[index];
+    const optionElementId = optionElement.getAttribute("id");
+
+    setIntegracao(Number(optionElementId));
+  };
+
+  const handleSelectServer = (event: any) => {
+    const index = event.target.selectedIndex;
+    const optionElement = event.target.childNodes[index];
+    const optionElementId = optionElement.getAttribute("id");
+
+    setServidor(Number(optionElementId));
   };
 
   const handleSelectAccount = (event: any) => {
@@ -143,16 +199,9 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     const optionElement = event.target.childNodes[index];
     const optionElementId = optionElement.getAttribute("id");
 
-    setEmpresa(Number(optionElementId));
+    setConta_servico(Number(optionElementId));
   };
 
-  const handleSelectIntegration = (event: any) => {
-    const index = event.target.selectedIndex;
-    const optionElement = event.target.childNodes[index];
-    const optionElementId = optionElement.getAttribute("id");
-
-    setEmpresa(Number(optionElementId));
-  };
 
   const handleSelectCompany = (event: any) => {
     const index = event.target.selectedIndex;
@@ -181,10 +230,26 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
         <select
           className="react-modal-options"
           onChange={(event) => handleSelectProject(event)}
+          value={projeto}
         >
-          {empresaObjects.map((item) => {
+          {projectsObjects.map((item) => {
             return (
-              <option id={item.id.toString()} key={item.id}>
+              <option id={item.id.toString()} value={item.id} key={item.id}>
+                {item.nome}
+              </option>
+            );
+          })}
+        </select>
+
+
+        <select
+          className="react-modal-options"
+          onChange={(event) => handleSelectIntegration(event)}
+          value={integracao}
+        >
+          {integrationObjects.map((item) => {
+            return (
+              <option id={item.id.toString()} value={item.id} key={item.id}>
                 {item.nome}
               </option>
             );
@@ -193,11 +258,12 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
         <select
           className="react-modal-options"
-          onChange={(event) => handleSelectCompany(event)}
+          onChange={(event) => handleSelectServer(event)}
+          value={servidor}
         >
-          {empresaObjects.map((item) => {
+          {serverObjects.map((item) => {
             return (
-              <option id={item.id.toString()} key={item.id}>
+              <option id={item.id.toString()} value={item.id} key={item.id}>
                 {item.nome}
               </option>
             );
@@ -206,24 +272,26 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
         <select
           className="react-modal-options"
-          onChange={(event) => handleSelectCompany(event)}
+          onChange={(event) => handleSelectAccount(event)}
+          value={conta_servico}
         >
-          {empresaObjects.map((item) => {
+          {accountObjects.map((item) => {
             return (
-              <option id={item.id.toString()} key={item.id}>
+              <option id={item.id.toString()} value={item.id} key={item.id}>
                 {item.nome}
               </option>
             );
           })}
         </select>
-
+        
         <select
           className="react-modal-options"
           onChange={(event) => handleSelectCompany(event)}
+          value={empresa}
         >
           {empresaObjects.map((item) => {
             return (
-              <option id={item.id.toString()} key={item.id}>
+              <option id={item.id.toString()} value={item.id} key={item.id}>
                 {item.nome}
               </option>
             );
