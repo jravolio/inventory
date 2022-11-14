@@ -21,10 +21,13 @@ interface ProjectsContextData{
     projects: any
     isAddMode: boolean;
     isNewAccountModalOpen: boolean;
+    isDeleteModalOpen: boolean;
     clickedTableRow: clickedTableProps[]
     getApiResponse: () => void;
     handleOpenNewProjectModal: () => void;
     handleCloseNewProjectModal: () => void;
+    handleOpenDeleteModal: (event: any, row: any) => void;
+    handleCloseDeleteModal: () => void;
     sucessToastMessage: () => void;
     errorToastMessage: (error: any) => void;
     handleDeleteButton: (event: any, row: any) => void
@@ -40,6 +43,7 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
     const [clickedTableRow, setClickedTableRow] = useState<clickedTableProps[]>([]);
     const [isAddMode, setIsAddMode] = useState(true);
     const [isNewAccountModalOpen, setIsNewAccountModalOpen] = useState(false);
+    const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     
     // Realizando chamada na api e renderizando a pagina sempre que o componente clickedTableRow for atualizado
     useEffect(() => {
@@ -52,10 +56,11 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
         setClickedTableRow(row);
         if(apiUrl == '/inventario/all/'){
           await api.delete('/inventarios/' + row.id)
-          getApiResponse() //chamar denovo pra atualizar grid ?/
         } else{
           await api.delete(apiUrl + '/' + row.id)
         }
+        handleCloseDeleteModal()
+        getApiResponse()
       }
 
       function handleEditButton(event: any, row: any) {
@@ -72,6 +77,16 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
     
       function handleCloseNewProjectModal() {
         setIsNewAccountModalOpen(false);
+      }
+    
+      function handleOpenDeleteModal( event: any, row: any) {
+        event.stopPropagation();
+        setClickedTableRow(row);
+        setDeleteModalOpen(true);
+      }
+    
+      function handleCloseDeleteModal() {
+        setDeleteModalOpen(false);
       }
     
 
@@ -109,7 +124,7 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
     }
 
     return(
-        <ProjectsContext.Provider value={{projects, getApiResponse ,handleDeleteButton, sucessToastMessage, errorToastMessage, handleEditButton, handleCloseNewProjectModal, handleOpenNewProjectModal, clickedTableRow, isAddMode, isNewAccountModalOpen}}>
+        <ProjectsContext.Provider value={{projects, getApiResponse ,handleDeleteButton, sucessToastMessage, errorToastMessage, handleEditButton, handleCloseNewProjectModal, handleOpenNewProjectModal, clickedTableRow, isAddMode, isNewAccountModalOpen, handleOpenDeleteModal, handleCloseDeleteModal, isDeleteModalOpen}}>
             {children}
         </ProjectsContext.Provider>
     )

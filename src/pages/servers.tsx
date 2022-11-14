@@ -84,6 +84,8 @@ export default function Servers() {
           <Table
             columns={columns}
             handleEditButton={handleEditButton}
+            isOpen={isNewAccountModalOpen}
+            onRequestClose={handleCloseNewProjectModal}
           />
 
           <ServerModal

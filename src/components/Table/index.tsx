@@ -1,23 +1,27 @@
 import { useContext } from "react";
-import {DataGrid,GridColDef, GridToolbar, GridRowsProp, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton} from "@mui/x-data-grid";
+import {DataGrid,GridColDef, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton} from "@mui/x-data-grid";
 import styles from "./styles.module.scss";
-import Button from "@mui/material/Button";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { ProjectsContext } from "../../ProjectsContext";
-import { Sidebar } from "../Sidebar";
+import { DeleteModal } from "../Modals/DeleteModal";
 
 
 interface TableProps{
   columns: GridColDef[];
   handleEditButton(event: any, params:any): any;
+  isOpen: boolean
+  onRequestClose: () => void;
+
 }
 
 
-export function Table({ columns, handleEditButton }: TableProps) {
+export function Table({ columns, handleEditButton, isOpen, onRequestClose }: TableProps) {
   const { projects } = useContext(ProjectsContext)
-  const { handleDeleteButton } = useContext(ProjectsContext)
+  const { handleOpenDeleteModal } = useContext(ProjectsContext)
+  const { handleCloseDeleteModal } = useContext(ProjectsContext)
+  const { isDeleteModalOpen } = useContext(ProjectsContext)
 
 
   // Coluna de edição e de ações
@@ -36,7 +40,7 @@ export function Table({ columns, handleEditButton }: TableProps) {
               <div className={styles.editButton}><FiEdit/></div>
             </button>
 
-            <button onClick={(event) => handleDeleteButton(event, params.row)}>
+            <button onClick={(event) => handleOpenDeleteModal(event, params.row)}>
             <div className={styles.deleteButton}>
               <FiTrash2/>
             </div>
@@ -59,6 +63,10 @@ export function Table({ columns, handleEditButton }: TableProps) {
   }
   return (
       <div className={styles.datatable}>
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onRequestClose={handleCloseDeleteModal}
+        />
         <DataGrid
           className={styles.datagrid}
           getRowId={(row) => row.id}

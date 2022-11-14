@@ -52,7 +52,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     };
 
     const defineMode = (row: clickedTableProps) => {
-      console.log(clickedTableRow)
       if (!isAddMode) {
         setNome(row.nome);
         setDescricao(row.descricao);
@@ -74,9 +73,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     };
 
     getApiResponse('/empresas/', setEmpresaObjects)
-    // getApiResponse('/projetos/', setProjectsObjects)
-    console.log(empresaObjects)
-    
   }, []);
 
   function handleSubmit(data: FormEvent) {
@@ -140,7 +136,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     const optionElementId = optionElement.getAttribute("id");
 
     setEmpresa(Number(optionElementId));
-    console.log(empresa)
   };
 
   const handleSelectAccount = (event: any) => {
@@ -149,7 +144,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     const optionElementId = optionElement.getAttribute("id");
 
     setEmpresa(Number(optionElementId));
-    console.log(empresa)
   };
 
   const handleSelectIntegration = (event: any) => {
@@ -158,7 +152,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     const optionElementId = optionElement.getAttribute("id");
 
     setEmpresa(Number(optionElementId));
-    console.log(empresa)
   };
 
   const handleSelectCompany = (event: any) => {
@@ -167,7 +160,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     const optionElementId = optionElement.getAttribute("id");
 
     setEmpresa(Number(optionElementId));
-    console.log(empresa)
   };
 
   return (

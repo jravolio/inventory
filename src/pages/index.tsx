@@ -16,7 +16,6 @@ export default function Home() {
   const { handleCloseNewProjectModal } = useContext(ProjectsContext);
   const { isAddMode } = useContext(ProjectsContext);
   const { clickedTableRow } = useContext(ProjectsContext);
-
   
   // Definindo colunas
   const columns: GridColDef[] = [
@@ -60,6 +59,8 @@ export default function Home() {
           <Table
             columns={columns}
             handleEditButton={handleEditButton}
+            isOpen={isNewAccountModalOpen}
+            onRequestClose={handleCloseNewProjectModal}
           />
 
           <InventoryModal
