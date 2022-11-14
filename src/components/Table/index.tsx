@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import {DataGrid,GridColDef, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarFilterButton} from "@mui/x-data-grid";
+import {DataGrid,GridColDef, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import styles from "./styles.module.scss";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import { ProjectsContext } from "../../ProjectsContext";
 import { DeleteModal } from "../Modals/DeleteModal";
 
@@ -11,13 +11,10 @@ import { DeleteModal } from "../Modals/DeleteModal";
 interface TableProps{
   columns: GridColDef[];
   handleEditButton(event: any, params:any): any;
-  isOpen: boolean
-  onRequestClose: () => void;
-
 }
 
 
-export function Table({ columns, handleEditButton, isOpen, onRequestClose }: TableProps) {
+export function Table({ columns, handleEditButton }: TableProps) {
   const { projects } = useContext(ProjectsContext)
   const { handleOpenDeleteModal } = useContext(ProjectsContext)
   const { handleCloseDeleteModal } = useContext(ProjectsContext)
@@ -31,19 +28,21 @@ export function Table({ columns, handleEditButton, isOpen, onRequestClose }: Tab
       headerName: "Ações",
       description:'Coluna para realizar ações',
       sortable: false,
-      width: 100,
+      width: 140,
       renderCell: (params: { row: { id: number } }) => {
         return (
           <div className={styles.cellAction}>
             
             <button onClick={(event) => handleEditButton(event, params.row)}>
-              <div className={styles.editButton}><FiEdit/></div>
+              <div title="Visualizar" className={styles.viewButton}><FiEye/></div>
+            </button>
+            
+            <button onClick={(event) => handleEditButton(event, params.row)}>
+              <div title="Editar" className={styles.editButton}><FiEdit/></div>
             </button>
 
             <button onClick={(event) => handleOpenDeleteModal(event, params.row)}>
-            <div className={styles.deleteButton}>
-              <FiTrash2/>
-            </div>
+            <div title="Deletar" className={styles.deleteButton}><FiTrash2/></div>
             </button>
           </div>
         );
@@ -53,14 +52,18 @@ export function Table({ columns, handleEditButton, isOpen, onRequestClose }: Tab
 
   function CustomToolbar() {
     return (
-      <GridToolbarContainer>
-        <GridToolbarColumnsButton color="inherit"/>
-        <GridToolbarFilterButton color="inherit"/>
-        <GridToolbarDensitySelector color="inherit"/>
-        <GridToolbarExport color="inherit"/>
+      <GridToolbarContainer sx={{display: 'flex', justifyContent:'space-between'}}>
+        <div>
+          <GridToolbarColumnsButton color="inherit"/>
+          <GridToolbarDensitySelector color="inherit"/>
+          <GridToolbarExport color="inherit"/>
+        </div>
+        <GridToolbarQuickFilter />
       </GridToolbarContainer>
     );
   }
+
+
   return (
       <div className={styles.datatable}>
         <DeleteModal

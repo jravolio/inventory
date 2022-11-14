@@ -41,12 +41,12 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
   
 
   
-      const setVariablesToZero = () => {
-        setNome("");
-        setDescricao("");
-        setObservacao("");
-        setEmpresa(1);
-      };
+  const setVariablesToZero = () => {
+    setNome("");
+    setDescricao("");
+    setObservacao("");
+    setEmpresa(1);
+  };
 
   useEffect(() => {
     setAddMode(isAddMode);
@@ -58,6 +58,7 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
         setObservacao(row.observacao);
         setEmpresa(row.empresa);
         setClickedTableRowId(row.id);
+        console.log(empresa)
       } else {
         setVariablesToZero();
       }
@@ -173,10 +174,11 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
         <select
           className="react-modal-options"
           onChange={(event) => handleSelectCompany(event)}
+          value={empresa}
         >
           {empresaObjects.map((item) => {
             return (
-              <option id={item.id.toString()} key={item.id}>
+              <option id={item.id.toString()} value={item.id} key={item.id}>
                 {item.nome}
               </option>
             );

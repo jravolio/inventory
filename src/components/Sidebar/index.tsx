@@ -102,7 +102,7 @@ interface SidebarProps {
 
 export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -203,38 +203,6 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
             disablePadding
             sx={{ display: "block" }}
           >
-            <a href="/serviceAccounts">
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <Tooltip title="Contas de serviço">
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <SupervisorAccountRoundedIcon className={styles.icon} />
-                  </ListItemIcon>
-                </Tooltip>
-                <ListItemText
-                  primary="Contas de serviço"
-                  sx={{ opacity: open ? 1 : 0 }}
-                  className={styles.text}
-                />
-              </ListItemButton>
-            </a>
-          </ListItem>
-          <ListItem
-            className={styles.link}
-            disablePadding
-            sx={{ display: "block" }}
-          >
             <a href="/projects">
               <ListItemButton
                 sx={{
@@ -262,6 +230,40 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
               </ListItemButton>
             </a>
           </ListItem>
+          <ListItem
+            className={styles.link}
+            disablePadding
+            sx={{ display: "block" }}
+          >
+            <a href="/integrations">
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <Tooltip title="Integrações">
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <AccountTreeRoundedIcon className={styles.icon} />
+                  </ListItemIcon>
+                </Tooltip>
+                <ListItemText
+                  primary="Integrações"
+                  sx={{ opacity: open ? 1 : 0 }}
+                  className={styles.text}
+                />
+              </ListItemButton>
+            </a>
+          </ListItem>
+          
+          
 
           <ListItem
             className={styles.link}
@@ -300,7 +302,7 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
             disablePadding
             sx={{ display: "block" }}
           >
-            <a href="/integrations">
+            <a href="/serviceAccounts">
               <ListItemButton
                 sx={{
                   minHeight: 48,
@@ -308,7 +310,7 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                   px: 2.5,
                 }}
               >
-                <Tooltip title="Integrações">
+                <Tooltip title="Contas de serviço">
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
@@ -316,11 +318,11 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
                       justifyContent: "center",
                     }}
                   >
-                    <AccountTreeRoundedIcon className={styles.icon} />
+                    <SupervisorAccountRoundedIcon className={styles.icon} />
                   </ListItemIcon>
                 </Tooltip>
                 <ListItemText
-                  primary="Integrações"
+                  primary="Contas de serviço"
                   sx={{ opacity: open ? 1 : 0 }}
                   className={styles.text}
                 />

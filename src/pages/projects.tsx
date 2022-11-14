@@ -60,8 +60,6 @@ export default function Projects() {
           <Table
             columns={columns}
             handleEditButton={handleEditButton}
-            isOpen={isNewAccountModalOpen}
-            onRequestClose={handleCloseNewProjectModal}
           />
 
           <ProjectModal

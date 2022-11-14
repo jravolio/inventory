@@ -53,8 +53,6 @@ export default function ServiceAccounts() {
           <Table
             columns={columns}
             handleEditButton={handleEditButton}
-            isOpen={isNewAccountModalOpen}
-            onRequestClose={handleCloseNewProjectModal}
           />
 
           <AccountModal

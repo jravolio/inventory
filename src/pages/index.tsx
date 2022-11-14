@@ -20,28 +20,52 @@ export default function Home() {
   // Definindo colunas
   const columns: GridColDef[] = [
     {
-      field: "conta_servico",
-      headerName: "Conta",
-      width: 200,
-      valueGetter: (params) => params.row.conta_servico.nome,
-    },
-    {
-      field: "integracao",
-      headerName: "Integração",
-      width: 100,
-      valueGetter: (params) => params.row.integracao.nome,
-    },
-    {
       field: "projeto",
       headerName: "Projeto",
       width: 200,
       valueGetter: (params) => params.row.projeto.nome,
     },
     {
+      field: "integracao",
+      headerName: "Integração",
+      width: 200,
+      valueGetter: (params) => params.row.integracao.nome,
+    },
+    {
       field: "servidor",
       headerName: "Servidor",
       width: 200,
       valueGetter: (params) => params.row.servidor.nome,
+    },
+    {
+      field: "conta_servico",
+      headerName: "Conta",
+      width: 200,
+      valueGetter: (params) => params.row.conta_servico.nome,
+    },
+    {
+      field: "empresa",
+      headerName: "Empresa",
+      width: 200,
+      valueGetter: (params) =>{
+        if (params.row.conta_servico.empresa == 1) {
+          return "V.tal";
+        } else {
+          return "Oi";
+        }
+      },
+    },
+    {
+      field: "descricao",
+      headerName: "Descrição Projeto",
+      width: 250,
+      valueGetter: (params) => params.row.projeto.descricao,
+    },
+    {
+      field: "descricao_integracao",
+      headerName: "Descrição Integração",
+      width: 200,
+      valueGetter: (params) => params.row.integracao.descricao,
     },
   ];
 
@@ -59,8 +83,6 @@ export default function Home() {
           <Table
             columns={columns}
             handleEditButton={handleEditButton}
-            isOpen={isNewAccountModalOpen}
-            onRequestClose={handleCloseNewProjectModal}
           />
 
           <InventoryModal

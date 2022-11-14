@@ -44,6 +44,18 @@
         filter: brightness(1.5);
       }
     }
+    .viewButton {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: rgb(24, 38, 232);
+      border: 1px dotted rgba(24, 38, 232, 0.596);
+      cursor: pointer;
+      transition: filter 0.2s;
+
+      &:hover{
+        filter: brightness(1.5);
+      }
+    }
     
     .deleteButton {
       padding: 2px 5px;

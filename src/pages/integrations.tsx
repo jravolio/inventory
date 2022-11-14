@@ -40,8 +40,6 @@ export default function Integrations() {
           <Table
             columns={columns}
             handleEditButton={handleEditButton}
-            isOpen={isNewAccountModalOpen}
-            onRequestClose={handleCloseNewProjectModal}
           />
 
           <IntegrationModal
