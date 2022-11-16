@@ -59,10 +59,10 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
 
 
   function handleSubmit(data: FormEvent) {
-    return addMode ? createNewAccount(data) : updateAccount(data);
+    return addMode ? createNewCompany(data) : updateCompany(data);
   }
 
-  async function createNewAccount(event: FormEvent) {
+  async function createNewCompany(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -74,7 +74,7 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Empresa criada com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
     
@@ -85,7 +85,7 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     onRequestClose();
   }
 
-  async function updateAccount(event: FormEvent) {
+  async function updateCompany(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -96,7 +96,7 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Empresa modificada com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
       

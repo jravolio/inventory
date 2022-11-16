@@ -84,10 +84,10 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
   }, []);
 
   function handleSubmit(data: FormEvent) {
-    return addMode ? createNewAccount(data) : updateAccount(data);
+    return addMode ? createNewServer(data) : updateServer(data);
   }
 
-  async function createNewAccount(event: FormEvent) {
+  async function createNewServer(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -102,7 +102,7 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
     
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Servidor criado com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
     
@@ -113,7 +113,7 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
     onRequestClose();
   }
 
-  async function updateAccount(event: FormEvent) {
+  async function updateServer(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -127,7 +127,7 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Servidor modificado com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
       

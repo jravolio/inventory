@@ -1,7 +1,6 @@
 import { CgClose } from "react-icons/cg";
 import Modal from "react-modal";
-import { FormEvent, useContext, useEffect, useState } from "react";
-import { api } from "../../../../services/api";
+import { useContext } from "react";
 import { ProjectsContext } from "../../../ProjectsContext";
 import styles from "./styles.module.scss";
 

@@ -12,7 +12,7 @@ inventario/all
 
 - Adicionar a opção de mais servidores e mais integrações; Aguardar back-end ⚠️
 
-- Adicionar visualização de projeto como um card;
+- Adicionar visualização de projeto como um card; (Developing)
 
 - Deixar valor padrão na aba filtros como "Selecionar"; ✅ (mudado modo de pesquisa)
 

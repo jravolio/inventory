@@ -120,10 +120,10 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   }, []);
 
   function handleSubmit(data: FormEvent) {
-    return addMode ? createNewAccount(data) : updateAccount(data);
+    return addMode ? createNewInventory(data) : updateInventory(data);
   }
 
-  async function createNewAccount(event: FormEvent) {
+  async function createNewInventory(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -137,7 +137,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     
     await api
       .post("/inventarios/", data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Criado com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
     setVariablesToZero()
@@ -147,7 +147,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     onRequestClose();
   }
 
-  async function updateAccount(event: FormEvent) {
+  async function updateInventory(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -160,7 +160,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
     await api
       .put("/inventarios/" + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Modificado com sucesso'))
       .catch((error) => errorToastMessage(error))
       
       setVariablesToZero()

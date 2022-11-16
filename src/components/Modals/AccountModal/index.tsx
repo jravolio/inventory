@@ -93,7 +93,7 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Conta criada com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
     
@@ -116,7 +116,7 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Conta modificada com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
 

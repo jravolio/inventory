@@ -28,7 +28,7 @@ interface ProjectsContextData{
     handleCloseNewProjectModal: () => void;
     handleOpenDeleteModal: (event: any, row: any) => void;
     handleCloseDeleteModal: () => void;
-    sucessToastMessage: () => void;
+    sucessToastMessage: (message: string) => void;
     errorToastMessage: (error: any) => void;
     handleDeleteButton: (event: any, row: any) => void
     handleEditButton: (event: any, row: any) => void;
@@ -56,8 +56,12 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
         setClickedTableRow(row);
         if(apiUrl == '/inventario/all/'){
           await api.delete('/inventarios/' + row.id)
+            .then(() => sucessToastMessage('Arquivo excluído com sucesso!'))
+            .catch((error) => errorToastMessage(error))
         } else{
           await api.delete(apiUrl + '/' + row.id)
+            .then(() => sucessToastMessage('Arquivo excluído com sucesso!'))
+            .catch((error) => errorToastMessage(error))
         }
         handleCloseDeleteModal()
         getApiResponse()
@@ -95,8 +99,8 @@ export function ProjectsProvider({apiUrl, children}: ProjectsProviderProps) {
         setProjects(data);
     }
     
-    function sucessToastMessage(){
-        toast.success('Requisição concluída!', {
+    function sucessToastMessage(message: string){
+        toast.success(message, {
             position: "top-center",
             autoClose: 3000,
             hideProgressBar: false,

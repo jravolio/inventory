@@ -59,10 +59,10 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
 
 
   function handleSubmit(data: FormEvent) {
-    return addMode ? createNewAccount(data) : updateAccount(data);
+    return addMode ? createNewIntegration(data) : updateIntegration(data);
   }
 
-  async function createNewAccount(event: FormEvent) {
+  async function createNewIntegration(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -74,7 +74,7 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
     
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Integração criada com sucesso!'))
       .catch((error) => errorToastMessage(error))
 
     
@@ -85,7 +85,7 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
     onRequestClose();
   }
 
-  async function updateAccount(event: FormEvent) {
+  async function updateIntegration(event: FormEvent) {
     event.preventDefault();
 
     const data = {
@@ -96,7 +96,7 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage())
+      .then(() => sucessToastMessage('Integração alterada com sucesso'))
       .catch((error) => errorToastMessage(error))
 
       
