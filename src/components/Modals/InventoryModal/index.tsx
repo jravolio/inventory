@@ -68,7 +68,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       setStateObjects(data);
       setStateObjects((state: any) =>{
         setState(state[0].id)
-        console.log(state[0].id)
         return state
       })
     };
