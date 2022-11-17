@@ -11,48 +11,25 @@ interface NewAccountModalProps {
   clickedTableRow: any
 }
 
-interface ProjetoProps {
-  id: number;
-  nome: string;
-  descricao: string;
-  area_negocio: string;
-  observacao: string;
-  tipo: string;
-}
 interface IntegrationProps {
   id: number;
   nome: string;
   descricao: string;
   observacao: string;
 }
-interface AccountProps {
-  id: number;
-  nome: string;
-  descricao: string;
-  observacao: string;
+interface ProjetoProps extends IntegrationProps{
+  area_negocio: string;
+  tipo: string;
+}
+interface AccountProps extends IntegrationProps {
   empresa: number;
 }
-interface ServerProps {
-  id: number;
-  nome: string;
-  descricao: string;
+interface ServerProps extends IntegrationProps{
   tipo: string;
   ambiente: string;
-  observacao: string;
   empresa: number;
 }
-interface EmpresaProps {
-  id: number;
-  nome: string;
-  descricao: string;
-  observacao: string;
-}
-interface clickedTableProps {
-  id: number;
-  nome: string;
-  descricao: string;
-  observacao: string;
-  empresa: number;
+interface clickedTableProps extends IntegrationProps{
   conta_servico: AccountProps
   projeto: ProjetoProps
   integracao: IntegrationProps
@@ -61,7 +38,6 @@ interface clickedTableProps {
 
 
 export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
-  const [empresaObjects, setEmpresaObjects] = useState<EmpresaProps[]>([]);
   const [projectsObjects, setProjectsObjects] = useState<ProjetoProps[]>([])
   const [integrationObjects, setIntegrationObjects] = useState<IntegrationProps[]>([])
   const [serverObjects, setServerObjects] = useState<ServerProps[]>([])
@@ -70,7 +46,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   const [conta_servico, setConta_servico] = useState(1)
   const [integracao, setIntegracao] = useState(1)
   const [servidor, setServidor] = useState(1)
-  const [empresa, setEmpresa] = useState(1);
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
   const { getApiResponse } = useContext(ProjectsContext)
@@ -83,41 +58,47 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     setIntegracao(1);
     setServidor(1);
     setConta_servico(1)
-    setEmpresa(1);
   };
+
+
+
+  useEffect(() => {
+    const getApiResponse = async (apiUrl: any, setStateObjects: any, setState: any) => {
+      const { data } = await api.get(apiUrl);
+      setStateObjects(data);
+      setStateObjects((state: any) =>{
+        setState(state[0].id)
+        console.log(state[0].id)
+        return state
+      })
+    };
+
+    getApiResponse('/projetos/', setProjectsObjects, setProjeto)
+    getApiResponse('/integracoes/', setIntegrationObjects, setIntegracao)
+    getApiResponse('/servidores/', setServerObjects, setServidor)
+    getApiResponse('/contas/', setAccountObjects, setConta_servico)
+
+  }, []);
 
   useEffect(() => {
     setAddMode(isAddMode);
-
-
+    
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
         setProjeto(row.projeto.id);
         setIntegracao(row.integracao.id);
         setServidor(row.servidor.id);
         setConta_servico(row.conta_servico.id);
-        setEmpresa(row.conta_servico.empresa);
         setClickedTableRowId(row.id);
       } else {
         setVariablesToZero();
       }
     };
 
+
+
     defineMode(clickedTableRow);
   }, [clickedTableRow, isAddMode]);
-
-  useEffect(() => {
-    const getApiResponse = async (apiUrl: any, setState: any) => {
-      const { data } = await api.get(apiUrl);
-      setState(data);
-    };
-
-    getApiResponse('/projetos/', setProjectsObjects)
-    getApiResponse('/integracoes/', setIntegrationObjects)
-    getApiResponse('/servidores/', setServerObjects)
-    getApiResponse('/contas/', setAccountObjects)
-    getApiResponse('/empresas/', setEmpresaObjects)
-  }, []);
 
   function handleSubmit(data: FormEvent) {
     return addMode ? createNewInventory(data) : updateInventory(data);
@@ -131,10 +112,8 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       integracao,
       servidor,
       conta_servico,
-      empresa,
     };
 
-    
     await api
       .post("/inventarios/", data)
       .then(() => sucessToastMessage('Criado com sucesso!'))
@@ -155,12 +134,11 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       integracao,
       servidor,
       conta_servico,
-      empresa,
     };
 
     await api
       .put("/inventarios/" + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage('Modificado com sucesso'))
+      .then(() => sucessToastMessage('Modificado com sucesso!'))
       .catch((error) => errorToastMessage(error))
       
       setVariablesToZero()
@@ -170,46 +148,15 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       onRequestClose();
   }
 
-  const handleSelectProject = (event: any) => {
+
+  const handleSelect = (event: any, setState: any) => {
     const index = event.target.selectedIndex;
     const optionElement = event.target.childNodes[index];
     const optionElementId = optionElement.getAttribute("id");
 
-    setProjeto(Number(optionElementId));
-  };
-  
-  const handleSelectIntegration = (event: any) => {
-    const index = event.target.selectedIndex;
-    const optionElement = event.target.childNodes[index];
-    const optionElementId = optionElement.getAttribute("id");
-
-    setIntegracao(Number(optionElementId));
+    setState(Number(optionElementId));
   };
 
-  const handleSelectServer = (event: any) => {
-    const index = event.target.selectedIndex;
-    const optionElement = event.target.childNodes[index];
-    const optionElementId = optionElement.getAttribute("id");
-
-    setServidor(Number(optionElementId));
-  };
-
-  const handleSelectAccount = (event: any) => {
-    const index = event.target.selectedIndex;
-    const optionElement = event.target.childNodes[index];
-    const optionElementId = optionElement.getAttribute("id");
-
-    setConta_servico(Number(optionElementId));
-  };
-
-
-  const handleSelectCompany = (event: any) => {
-    const index = event.target.selectedIndex;
-    const optionElement = event.target.childNodes[index];
-    const optionElementId = optionElement.getAttribute("id");
-
-    setEmpresa(Number(optionElementId));
-  };
 
   return (
     <Modal
@@ -225,12 +172,12 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
       <form onSubmit={handleSubmit}>
         <h2>{addMode ? "Criar item" : "Editar item"}</h2>
-        <hr />
 
         <select
           className="react-modal-options"
-          onChange={(event) => handleSelectProject(event)}
+          onChange={(event) => handleSelect(event, setProjeto)}
           value={projeto}
+          id='test'
         >
           {projectsObjects.map((item) => {
             return (
@@ -244,7 +191,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
         <select
           className="react-modal-options"
-          onChange={(event) => handleSelectIntegration(event)}
+          onChange={(event) => handleSelect(event, setIntegracao)}
           value={integracao}
         >
           {integrationObjects.map((item) => {
@@ -258,7 +205,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
         <select
           className="react-modal-options"
-          onChange={(event) => handleSelectServer(event)}
+          onChange={(event) => handleSelect(event, setServidor)}
           value={servidor}
         >
           {serverObjects.map((item) => {
@@ -272,7 +219,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
         <select
           className="react-modal-options"
-          onChange={(event) => handleSelectAccount(event)}
+          onChange={(event) => handleSelect(event, setConta_servico)}
           value={conta_servico}
         >
           {accountObjects.map((item) => {
@@ -284,20 +231,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
           })}
         </select>
         
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelectCompany(event)}
-          value={empresa}
-        >
-          {empresaObjects.map((item) => {
-            return (
-              <option id={item.id.toString()} value={item.id} key={item.id}>
-                {item.nome}
-              </option>
-            );
-          })}
-        </select>
-
         <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
       </form>
     </Modal>
