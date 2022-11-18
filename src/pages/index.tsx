@@ -5,6 +5,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { InventoryModal } from "../components/Modals/InventoryModal";
 import Head from 'next/head'
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
+import { ViewModal } from "../components/Modals/ViewModal";
 
 
 export default function Home() {
@@ -91,6 +92,7 @@ export default function Home() {
             isAddMode={isAddMode}
             clickedTableRow={clickedTableRow}
           />
+
         </div>
       </div>
     </ProjectsProvider>

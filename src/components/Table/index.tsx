@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import { ProjectsContext } from "../../ProjectsContext";
 import { DeleteModal } from "../Modals/DeleteModal";
+import { ViewModal } from "../Modals/ViewModal";
 
 
 interface TableProps{
@@ -17,6 +18,7 @@ interface TableProps{
 export function Table({ columns, handleEditButton }: TableProps) {
   const { projects } = useContext(ProjectsContext)
   const { handleOpenDeleteModal } = useContext(ProjectsContext)
+  const { handleOpenViewModal } = useContext(ProjectsContext)
   const { handleCloseDeleteModal } = useContext(ProjectsContext)
   const { isDeleteModalOpen } = useContext(ProjectsContext)
 
@@ -33,7 +35,7 @@ export function Table({ columns, handleEditButton }: TableProps) {
         return (
           <div className={styles.cellAction}>
             
-            <button onClick={(event) => handleEditButton(event, params.row)}>
+            <button onClick={(event) => handleOpenViewModal(event, params.row)}>
               <div title="Visualizar" className={styles.viewButton}><FiEye/></div>
             </button>
             
@@ -66,10 +68,14 @@ export function Table({ columns, handleEditButton }: TableProps) {
 
   return (
       <div className={styles.datatable}>
+        
         <DeleteModal
           isOpen={isDeleteModalOpen}
           onRequestClose={handleCloseDeleteModal}
         />
+
+        <ViewModal />
+        
         <DataGrid
           className={styles.datagrid}
           getRowId={(row) => row.id}

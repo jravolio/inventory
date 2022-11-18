@@ -19,3 +19,5 @@ inventario/all
 - Retirar opções de operação do "está vazio" para baixo; ✅ (mudado modo de pesquisa)
 
 - Trocar nome dos filtros Coluna = Buscar, Operação = Tipo de Consulta e Chave = Palavra Chave ✅ (mudado modo de pesquisa)
+
+- Viewmodal não funciona
