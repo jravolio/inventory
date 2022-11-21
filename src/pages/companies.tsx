@@ -14,6 +14,7 @@ export default function Companies() {
   const { handleCloseNewProjectModal } = useContext(ProjectsContext)
   const { isAddMode } = useContext(ProjectsContext)
   const { clickedTableRow } = useContext(ProjectsContext)
+  const { handleOpenNewProjectModal } = useContext(ProjectsContext)
 
 
   // Definindo colunas
@@ -32,6 +33,7 @@ export default function Companies() {
         </Head>
         <Sidebar 
         tableName={tableName}
+        handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
           <Table

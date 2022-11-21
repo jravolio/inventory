@@ -16,6 +16,7 @@ export default function Home() {
   const { handleCloseNewProjectModal } = useContext(ProjectsContext);
   const { isAddMode } = useContext(ProjectsContext);
   const { clickedTableRow } = useContext(ProjectsContext);
+  const { handleOpenNewProjectModal } = useContext(ProjectsContext);
   
   // Definindo colunas
   const columns: GridColDef[] = [
@@ -81,6 +82,7 @@ export default function Home() {
         </Head>
         <Sidebar 
         tableName={tableName}
+        handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
           <Table

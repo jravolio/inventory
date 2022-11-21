@@ -15,6 +15,7 @@ export default function Servers() {
   const { handleCloseNewProjectModal } = useContext(ProjectsContext)
   const { isAddMode } = useContext(ProjectsContext)
   const { clickedTableRow } = useContext(ProjectsContext)
+  const { handleOpenNewProjectModal } = useContext(ProjectsContext)
 
 
 
@@ -77,6 +78,7 @@ export default function Servers() {
         </Head>
         <Sidebar
           tableName={tableName}
+          handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
           <Table

@@ -15,6 +15,7 @@ export default function Integrations() {
   const { handleCloseNewProjectModal } = useContext(ProjectsContext)
   const { isAddMode } = useContext(ProjectsContext)
   const { clickedTableRow } = useContext(ProjectsContext)
+  const { handleOpenNewProjectModal } = useContext(ProjectsContext)
 
 
 
@@ -33,6 +34,7 @@ export default function Integrations() {
         </Head>
         <Sidebar 
         tableName={tableName}
+        handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
           <Table

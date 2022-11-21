@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import * as React from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -22,7 +22,6 @@ import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 import Tooltip from "@mui/material/Tooltip";
 import styles from "./styles.module.scss";
-import { ProjectsContext } from "../../ProjectsContext";
 
 const drawerWidth = 240;
 
@@ -98,12 +97,12 @@ const Drawer = styled(MuiDrawer, {
 
 interface SidebarProps {
   tableName: string;
+  handleOpenNewProjectModal: () => void;
 }
 
-export function Sidebar({ tableName }: SidebarProps) {
+export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
-  const { handleOpenNewProjectModal } = useContext(ProjectsContext);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
