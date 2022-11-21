@@ -7,8 +7,8 @@ RUN yarn install
 
 COPY next.config.js ./next.config.js
 
-COPY ./src/pages ./src/pages
-COPY public ./public
-COPY styles ./styles
+COPY ./src ./src
+COPY ./services ./services
+COPY ./public ./public
 
 CMD [ "yarn", "dev" ]
