@@ -10,7 +10,6 @@ import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 export default function Integrations() {
   const apiUrl = "/integracoes";
   const tableName = 'Integrações'
-  const { handleOpenNewProjectModal } = useContext(ProjectsContext)
   const { handleEditButton } = useContext(ProjectsContext)
   const { isNewAccountModalOpen } = useContext(ProjectsContext)
   const { handleCloseNewProjectModal } = useContext(ProjectsContext)
@@ -34,7 +33,6 @@ export default function Integrations() {
         </Head>
         <Sidebar 
         tableName={tableName}
-        handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
           <Table

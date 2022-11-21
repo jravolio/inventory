@@ -10,7 +10,6 @@ import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 export default function ServiceAccounts() {
   const apiUrl = "/contas";
   const tableName = 'Contas de serviço'
-  const { handleOpenNewProjectModal } = useContext(ProjectsContext)
   const { handleEditButton } = useContext(ProjectsContext)
   const { isNewAccountModalOpen } = useContext(ProjectsContext)
   const { handleCloseNewProjectModal } = useContext(ProjectsContext)
@@ -47,7 +46,6 @@ export default function ServiceAccounts() {
         </Head>
         <Sidebar 
         tableName={tableName}
-        handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
           <Table

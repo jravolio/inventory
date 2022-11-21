@@ -11,7 +11,6 @@ import { ViewModal } from "../components/Modals/ViewModal";
 export default function Home() {
   const apiUrl = "/inventario/all/";
   const tableName = 'Inventário'
-  const { handleOpenNewProjectModal } = useContext(ProjectsContext);
   const { handleEditButton } = useContext(ProjectsContext);
   const { isNewAccountModalOpen } = useContext(ProjectsContext);
   const { handleCloseNewProjectModal } = useContext(ProjectsContext);
@@ -30,7 +29,11 @@ export default function Home() {
       field: "integracao",
       headerName: "Integração",
       width: 200,
-      valueGetter: (params) => params.row.integracao.nome,
+      renderCell: (params) => {
+        return(
+          <a href="#">{params.row.integracao.nome}</a>
+        )
+      },
     },
     {
       field: "servidor",
@@ -78,7 +81,6 @@ export default function Home() {
         </Head>
         <Sidebar 
         tableName={tableName}
-        handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
           <Table
