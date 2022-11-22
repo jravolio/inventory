@@ -6,9 +6,9 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY next.config.js ./next.config.js
-
-COPY ./src ./src
-COPY ./services ./services
-COPY ./public ./public
+COPY . /app
+# COPY ./src ./src
+# COPY ./services ./services
+# COPY ./public ./public
 
 CMD [ "yarn", "dev" ]
