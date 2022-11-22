@@ -158,7 +158,7 @@ export function ProjectsProvider({ apiUrl, children }: ProjectsProviderProps) {
         isDeleteModalOpen,
         handleOpenViewModal,
         handleCloseViewModal,
-        isViewModalOpen
+        isViewModalOpen,
       }}
     >
       {children}

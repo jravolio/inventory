@@ -17,6 +17,7 @@ export default function Home() {
   const { isAddMode } = useContext(ProjectsContext);
   const { clickedTableRow } = useContext(ProjectsContext);
   const { handleOpenNewProjectModal } = useContext(ProjectsContext);
+  const { handleOpenViewModal } = useContext(ProjectsContext);
   
   // Definindo colunas
   const columns: GridColDef[] = [
@@ -32,7 +33,7 @@ export default function Home() {
       width: 200,
       renderCell: (params) => {
         return(
-          <a href="#">{params.row.integracao.nome}</a>
+          <button onClick={(event) => handleOpenViewModal(event, params.row)}>{params.row.integracao.nome}</button>
         )
       },
     },

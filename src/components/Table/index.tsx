@@ -74,7 +74,7 @@ export function Table({ columns, handleEditButton }: TableProps) {
           onRequestClose={handleCloseDeleteModal}
         />
 
-        <ViewModal />
+        <ViewModal/>
         
         <DataGrid
           className={styles.datagrid}

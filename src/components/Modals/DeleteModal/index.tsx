@@ -5,14 +5,14 @@ import { ProjectsContext } from "../../../ProjectsContext";
 import styles from "./styles.module.scss";
 
 
-interface NewAccountModalProps {
+interface DeleteModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
 }
 
 
 
-export function DeleteModal({ isOpen,onRequestClose }: NewAccountModalProps) {
+export function DeleteModal({ isOpen,onRequestClose }: DeleteModalProps) {
   const { handleDeleteButton } = useContext(ProjectsContext)
   const { clickedTableRow } = useContext(ProjectsContext)
   

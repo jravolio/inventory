@@ -58,7 +58,6 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
         setObservacao(row.observacao);
         setEmpresa(row.empresa);
         setClickedTableRowId(row.id);
-        console.log(empresa)
       } else {
         setVariablesToZero();
       }
@@ -90,7 +89,8 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       empresa,
     };
 
-    
+    console.log(data)
+
     await api
       .post(apiUrl, data)
       .then(() => sucessToastMessage('Conta criada com sucesso!'))

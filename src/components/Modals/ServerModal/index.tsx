@@ -89,7 +89,7 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
 
   async function createNewServer(event: FormEvent) {
     event.preventDefault();
-
+    
     const data = {
       nome,
       descricao,
@@ -98,7 +98,8 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
       observacao,
       empresa,
     };
-
+    
+    console.log(data)
     
     await api
       .post(apiUrl, data)
