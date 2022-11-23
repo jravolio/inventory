@@ -1,16 +1,15 @@
 import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { GridColDef } from "@mui/x-data-grid";
 import { InventoryModal } from "../components/Modals/InventoryModal";
-import Head from 'next/head'
+import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
 import { ViewModal } from "../components/Modals/ViewModal";
 
-
 export default function Home() {
-  const apiUrl = "/inventario/all/";
-  const tableName = 'Inventário'
+  const apiUrl = "/inventarios";
+  const tableName = "Inventário";
   const { handleEditButton } = useContext(ProjectsContext);
   const { isNewAccountModalOpen } = useContext(ProjectsContext);
   const { handleCloseNewProjectModal } = useContext(ProjectsContext);
@@ -18,7 +17,8 @@ export default function Home() {
   const { clickedTableRow } = useContext(ProjectsContext);
   const { handleOpenNewProjectModal } = useContext(ProjectsContext);
   const { handleOpenViewModal } = useContext(ProjectsContext);
-  
+
+
   // Definindo colunas
   const columns: GridColDef[] = [
     {
@@ -31,29 +31,34 @@ export default function Home() {
       field: "integracao",
       headerName: "Integração",
       width: 200,
-      renderCell: (params) => {
-        return(
-          <button onClick={(event) => handleOpenViewModal(event, params.row)}>{params.row.integracao.nome}</button>
-        )
+      valueGetter: (params) => {
+        const row = params.row.integracao;
+        return row.map((array: any) => array.nome);
       },
     },
     {
       field: "servidor",
       headerName: "Servidor",
       width: 200,
-      valueGetter: (params) => params.row.servidor.nome,
+      valueGetter(params) {
+        const row = params.row.servidor;
+        return row.map((array: any) => array.nome);
+      },
     },
     {
       field: "conta_servico",
       headerName: "Conta",
       width: 200,
-      valueGetter: (params) => params.row.conta_servico.nome,
+      valueGetter(params) {
+        const row = params.row.conta_servico;
+        return row.map((array: any) => array.nome);
+      },
     },
     {
       field: "empresa",
       headerName: "Empresa",
       width: 200,
-      valueGetter: (params) =>{
+      valueGetter: (params) => {
         if (params.row.conta_servico.empresa == 1) {
           return "V.tal";
         } else {
@@ -67,12 +72,6 @@ export default function Home() {
       width: 250,
       valueGetter: (params) => params.row.projeto.descricao,
     },
-    {
-      field: "descricao_integracao",
-      headerName: "Descrição Integração",
-      width: 200,
-      valueGetter: (params) => params.row.integracao.descricao,
-    },
   ];
 
   return (
@@ -81,15 +80,12 @@ export default function Home() {
         <Head>
           <title>Inventário</title>
         </Head>
-        <Sidebar 
-        tableName={tableName}
-        handleOpenNewProjectModal={handleOpenNewProjectModal}
+        <Sidebar
+          tableName={tableName}
+          handleOpenNewProjectModal={handleOpenNewProjectModal}
         />
         <div className="home-container">
-          <Table
-            columns={columns}
-            handleEditButton={handleEditButton}
-          />
+          <Table columns={columns} handleEditButton={handleEditButton} />
 
           <InventoryModal
             isOpen={isNewAccountModalOpen}
@@ -97,7 +93,6 @@ export default function Home() {
             isAddMode={isAddMode}
             clickedTableRow={clickedTableRow}
           />
-
         </div>
       </div>
     </ProjectsProvider>
