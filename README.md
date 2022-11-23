@@ -12,7 +12,7 @@ inventario/all
 
 - Adicionar a opção de mais servidores e mais integrações; Aguardar back-end ⚠️
 
-- Adicionar visualização de projeto como um card; (Developing)
+- Adicionar visualização de projeto como um card; ✅
 
 - Deixar valor padrão na aba filtros como "Selecionar"; ✅ (mudado modo de pesquisa)
 
@@ -20,4 +20,8 @@ inventario/all
 
 - Trocar nome dos filtros Coluna = Buscar, Operação = Tipo de Consulta e Chave = Palavra Chave ✅ (mudado modo de pesquisa)
 
-- Viewmodal não funciona
+- Viewmodal não funciona ✅
+
+- Descrição integração sumiu, será uma tabela vinda de adicionar inventário?(consultar backend)
+
+- Adicionar clicar no link abrir integração ou servidor
