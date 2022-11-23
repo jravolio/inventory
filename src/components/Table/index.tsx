@@ -7,6 +7,7 @@ import { FiEdit, FiTrash2, FiEye } from "react-icons/fi";
 import { ProjectsContext } from "../../ProjectsContext";
 import { DeleteModal } from "../Modals/DeleteModal";
 import { ViewModal } from "../Modals/ViewModal";
+import { Tooltip } from "@mui/material";
 
 
 interface TableProps{
@@ -34,18 +35,24 @@ export function Table({ columns, handleEditButton }: TableProps) {
       renderCell: (params: { row: { id: number } }) => {
         return (
           <div className={styles.cellAction}>
-            
-            <button onClick={(event) => handleOpenViewModal(event, params.row)}>
-              <div title="Visualizar" className={styles.viewButton}><FiEye/></div>
-            </button>
-            
-            <button onClick={(event) => handleEditButton(event, params.row)}>
-              <div title="Editar" className={styles.editButton}><FiEdit/></div>
-            </button>
 
-            <button onClick={(event) => handleOpenDeleteModal(event, params.row)}>
-            <div title="Deletar" className={styles.deleteButton}><FiTrash2/></div>
-            </button>
+            <Tooltip title="Visualizar">
+              <button onClick={(event) => handleOpenViewModal(event, params.row)}>
+                <div className={styles.viewButton}><FiEye/></div>
+              </button>
+            </Tooltip>
+            
+            <Tooltip title="Editar" >
+              <button onClick={(event) => handleEditButton(event, params.row)}>
+                <div className={styles.editButton}><FiEdit/></div>
+              </button>
+            </Tooltip>
+
+            <Tooltip title="Deletar">
+              <button onClick={(event) => handleOpenDeleteModal(event, params.row)}>
+                <div className={styles.deleteButton}><FiTrash2/></div>
+              </button>
+            </Tooltip>
           </div>
         );
       },

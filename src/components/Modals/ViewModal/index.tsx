@@ -4,8 +4,6 @@ import { useContext } from "react";
 import { ProjectsContext } from "../../../ProjectsContext";
 import styles from "./styles.module.scss";
 
-
-
 export function ViewModal() {
   const { isViewModalOpen } = useContext(ProjectsContext);
   const { handleCloseViewModal } = useContext(ProjectsContext);
@@ -37,20 +35,55 @@ export function ViewModal() {
             );
 
           case "tipo":
-            if (clickedTableRow.tipo == "A") {
-              return (
-                <div key={index}>
-                  <h1>Tipo</h1>
-                  <p>Servidor aplicacional</p>
-                </div>
-              );
+            if (clickedTableRow.ambiente) {
+              if (clickedTableRow.tipo == "A") {
+                return (
+                  <div key={index}>
+                    <h1>Tipo</h1>
+                    <p>Servidor aplicacional</p>
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={index}>
+                    <h1>Tipo</h1>
+                    <p>Banco de Dados</p>
+                  </div>
+                );
+              }
             } else {
-              return (
-                <div key={index}>
-                  <h1>Tipo</h1>
-                  <p>Banco de Dados</p>
-                </div>
-              );
+              if (clickedTableRow.tipo == "A") {
+                return (
+                  <div key={index}>
+                    <h1>Tipo de projeto</h1>
+                    <p>Ambiente</p>
+                  </div>
+                );
+              }
+              if (clickedTableRow.tipo == "B") {
+                return (
+                  <div key={index}>
+                    <h1>Tipo de projeto</h1>
+                    <p>Aplicação</p>
+                  </div>
+                );
+              }
+              if (clickedTableRow.tipo == "C") {
+                return (
+                  <div key={index}>
+                    <h1>Tipo de projeto</h1>
+                    <p>Automação</p>
+                  </div>
+                );
+              }
+              if (clickedTableRow.tipo == "D") {
+                return (
+                  <div key={index}>
+                    <h1>Tipo de projeto</h1>
+                    <p>RPA Uipath</p>
+                  </div>
+                );
+              }
             }
 
           case "ambiente":
@@ -132,42 +165,52 @@ export function ViewModal() {
             return (
               <div key={index}>
                 <h1>Projeto</h1>
-                <h2 className={styles.subtitle}>{clickedTableRow.projeto.nome}</h2>
-              </div>
-            );
-
-          case "conta_servico":
-            const rowAccount = clickedTableRow.conta_servico
-            return (
-              <div key={index}>
-                <h1>Conta de serviço</h1>
-                <div className={styles.divFlex}>
-                {rowAccount.map((row: any, index: number) => <p key={index}>{row.nome}</p>)}
-                </div>
+                <h2 className={styles.subtitle}>
+                  {clickedTableRow.projeto.nome}
+                </h2>
               </div>
             );
 
           case "integracao":
-            const rowIntegration = clickedTableRow.integracao
+            const rowIntegration = clickedTableRow.integracao;
+            return (
+              <div key={index}>
+                <h1>Integrações</h1>
+                <div className={styles.divFlex}>
+                  {rowIntegration.map((row: any, index: number) => (
+                    <p key={index}>{row.nome}</p>
+                  ))}
+                </div>
+              </div>
+            );
+            
+            case "conta_servico":
+              const rowAccount = clickedTableRow.conta_servico;
             return (
               <div key={index}>
                 <h1>Conta de serviço</h1>
                 <div className={styles.divFlex}>
-                {rowIntegration.map((row: any, index: number) => <p key={index}>{row.nome}</p>)}
+                  {rowAccount.map((row: any, index: number) => (
+                    <p key={index}>{row.nome}</p>
+                    ))}
                 </div>
               </div>
             );
-
-          case "servidor":
-            const rowServer = clickedTableRow.servidor
-            return (
-              <div key={index}>
-                <h1>Conta de serviço</h1>
-                <div className={styles.divFlex}>
-                {rowServer.map((row: any, index: number) => <p key={index}>{row.nome}</p>)}
+            
+            case "servidor":
+              const rowServer = clickedTableRow.servidor;
+              console.log(clickedTableRow.conta_servico)
+              return (
+                <div key={index}>
+                  <h1>Servidores</h1>
+                  <div className={styles.divFlex}>
+                    {rowServer.map((row: any, index: number) => (
+                      <p key={index}>{row.nome}</p>
+                    ))}
+                  </div>
+                  
                 </div>
-              </div>
-            );
+              );
 
           default:
             return <h1>{test}</h1>;

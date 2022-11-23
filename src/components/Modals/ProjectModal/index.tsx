@@ -40,8 +40,8 @@ export function ProjectModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     setNome("")
     setDescricao("")
     setArea_negocio("")
-    setTipo("")
     setObservacao("")
+    setTipo("A")
   };
 
   useEffect(() => {
