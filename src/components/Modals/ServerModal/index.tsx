@@ -99,7 +99,6 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
       empresa,
     };
     
-    console.log(data)
     
     await api
       .post(apiUrl, data)
