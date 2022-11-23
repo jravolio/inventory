@@ -1,24 +1,21 @@
 import { CgClose } from "react-icons/cg";
 import Modal from "react-modal";
-import { FormEvent, useContext, useEffect, useState } from "react";
-import { api } from "../../../../services/api";
+import { useContext } from "react";
 import { ProjectsContext } from "../../../ProjectsContext";
+import styles from "./styles.module.scss";
 
-interface ViewModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-}
+
 
 export function ViewModal() {
   const { isViewModalOpen } = useContext(ProjectsContext);
   const { handleCloseViewModal } = useContext(ProjectsContext);
   const { clickedTableRow } = useContext(ProjectsContext);
 
-  const test = Object.keys(clickedTableRow);
+  const ObjectKeys = Object.keys(clickedTableRow);
 
-  const testFunction = (
+  const getAllTitles = (
     <div>
-      {test.map((test, index) => {
+      {ObjectKeys.map((test, index) => {
         switch (test) {
           case "id":
             return;
@@ -135,31 +132,40 @@ export function ViewModal() {
             return (
               <div key={index}>
                 <h1>Projeto</h1>
-                <p>{clickedTableRow.projeto.nome}</p>
+                <h2 className={styles.subtitle}>{clickedTableRow.projeto.nome}</h2>
               </div>
             );
 
           case "conta_servico":
+            const rowAccount = clickedTableRow.conta_servico
             return (
               <div key={index}>
                 <h1>Conta de serviço</h1>
-                <p>{clickedTableRow.conta_servico.nome}</p>
+                <div className={styles.divFlex}>
+                {rowAccount.map((row: any, index: number) => <p key={index}>{row.nome}</p>)}
+                </div>
               </div>
             );
 
           case "integracao":
+            const rowIntegration = clickedTableRow.integracao
             return (
               <div key={index}>
-                <h1>Integração</h1>
-                <p>{clickedTableRow.integracao.nome}</p>
+                <h1>Conta de serviço</h1>
+                <div className={styles.divFlex}>
+                {rowIntegration.map((row: any, index: number) => <p key={index}>{row.nome}</p>)}
+                </div>
               </div>
             );
 
           case "servidor":
+            const rowServer = clickedTableRow.servidor
             return (
               <div key={index}>
-                <h1>Servidor</h1>
-                <p>{clickedTableRow.servidor.nome}</p>
+                <h1>Conta de serviço</h1>
+                <div className={styles.divFlex}>
+                {rowServer.map((row: any, index: number) => <p key={index}>{row.nome}</p>)}
+                </div>
               </div>
             );
 
@@ -182,7 +188,7 @@ export function ViewModal() {
         <CgClose onClick={handleCloseViewModal} />
       </button>
 
-      {testFunction}
+      {getAllTitles}
     </Modal>
   );
 }
