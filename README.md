@@ -25,3 +25,11 @@ inventario/all
 - Descrição integração sumiu, será uma tabela vinda de adicionar inventário?(consultar backend)
 
 - Adicionar clicar no link abrir integração ou servidor
+
+- Verificar se existe conta, caso não retornar "não existente"
+
+- Ajustar arquivo csv
+
+- adicionar icone ao lado do titulo do dialog mui
+
+- consertar put inventário

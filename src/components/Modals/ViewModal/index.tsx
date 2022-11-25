@@ -43,14 +43,14 @@ export function ViewModal() {
                     <p>Servidor aplicacional</p>
                   </div>
                 );
-              } else {
-                return (
-                  <div key={index}>
-                    <h1>Tipo</h1>
-                    <p>Banco de Dados</p>
-                  </div>
-                );
               }
+
+              return (
+                <div key={index}>
+                  <h1>Tipo</h1>
+                  <p>Banco de Dados</p>
+                </div>
+              );
             } else {
               if (clickedTableRow.tipo == "A") {
                 return (
@@ -199,7 +199,6 @@ export function ViewModal() {
             
             case "servidor":
               const rowServer = clickedTableRow.servidor;
-              console.log(clickedTableRow.conta_servico)
               return (
                 <div key={index}>
                   <h1>Servidores</h1>
@@ -208,12 +207,14 @@ export function ViewModal() {
                       <p key={index}>{row.nome}</p>
                     ))}
                   </div>
-                  
+
+                  <h1>Descrição do projeto</h1>
+                  <p>{clickedTableRow.projeto.descricao}</p>
                 </div>
               );
 
           default:
-            return <h1>{test}</h1>;
+            return
         }
       })}
     </div>

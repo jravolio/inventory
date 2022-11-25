@@ -3,6 +3,9 @@ import Modal from "react-modal";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../../../services/api";
 import { ProjectsContext } from "../../../ProjectsContext";
+import Select from 'react-select'
+import styles from "./styles.module.scss";
+import makeAnimated from 'react-select/animated'
 
 interface NewAccountModalProps {
   isOpen: boolean;
@@ -44,18 +47,31 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   const [accountObjects, setAccountObjects] = useState<AccountProps[]>([])
   const [projeto, setProjeto] = useState(1)
   const [conta_servico, setConta_servico] = useState(1)
-  const [integracao, setIntegracao] = useState(1)
+  const [integracao, setIntegracao] = useState<IntegrationProps>()
   const [servidor, setServidor] = useState(1)
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
   const { getApiResponse } = useContext(ProjectsContext)
   const { sucessToastMessage } = useContext(ProjectsContext)
   const { errorToastMessage } = useContext(ProjectsContext)
+  const animatedComponent = makeAnimated()
+
+  // adicionando label nos objects
+  const multiSelectObjects = (object: any) =>{
+    const newObject = object.map((item: any) =>{
+      return{...item, label:item.nome, value:item.id, key:item.id}
+    })
+
+    return newObject
+  }
+
   
+  const handleIntegrationChange = (items: any, setState: any) =>{
+    setState(items)
+  }
 
   const setVariablesToZero = () => {
     setProjeto(1);
-    setIntegracao(1);
     setServidor(1);
     setConta_servico(1)
   };
@@ -70,6 +86,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
         setState(state[0].id)
         return state
       })
+      setStateObjects
     };
 
     getApiResponse('/projetos/', setProjectsObjects, setProjeto)
@@ -84,8 +101,9 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
+        console.log(row.integracao)
         setProjeto(row.projeto.id);
-        setIntegracao(row.integracao.id);
+        setIntegracao(row.integracao);
         setServidor(row.servidor.id);
         setConta_servico(row.conta_servico.id);
         setClickedTableRowId(row.id);
@@ -112,6 +130,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       servidor,
       conta_servico,
     };
+
 
     await api
       .post("/inventarios/", data)
@@ -170,7 +189,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar item" : "Editar item"}</h2>
+        <h2>{addMode ? "Criar inventário" : "Editar inventário"}</h2>
 
         <select
           className="react-modal-options"
@@ -187,48 +206,31 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
           })}
         </select>
 
+          
+        <Select 
+        isMulti={true}
+        options={multiSelectObjects(integrationObjects)}
+        onChange={(items) => handleIntegrationChange(items, setIntegracao)}
+        className={styles.multiselect}
+        components={animatedComponent}
+        />
 
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelect(event, setIntegracao)}
-          value={integracao}
-        >
-          {integrationObjects.map((item) => {
-            return (
-              <option id={item.id.toString()} value={item.id} key={item.id}>
-                {item.nome}
-              </option>
-            );
-          })}
-        </select>
+        <Select 
+        isMulti={true}
+        options={multiSelectObjects(serverObjects)}
+        onChange={(items) => handleIntegrationChange(items, setServidor)}
+        className={styles.multiselect}
+        components={animatedComponent}
+        />
 
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelect(event, setServidor)}
-          value={servidor}
-        >
-          {serverObjects.map((item) => {
-            return (
-              <option id={item.id.toString()} value={item.id} key={item.id}>
-                {item.nome}
-              </option>
-            );
-          })}
-        </select>
+        <Select 
+        isMulti={true}
+        options={multiSelectObjects(accountObjects)}
+        onChange={(items) => handleIntegrationChange(items, setConta_servico)}
+        className={styles.multiselect}
+        components={animatedComponent}
+        />
 
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelect(event, setConta_servico)}
-          value={conta_servico}
-        >
-          {accountObjects.map((item) => {
-            return (
-              <option id={item.id.toString()} value={item.id} key={item.id}>
-                {item.nome}
-              </option>
-            );
-          })}
-        </select>
         
         <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
       </form>

@@ -118,7 +118,7 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar sx={{backgroundColor: '#191918'}}>
+        <Toolbar sx={{backgroundColor: '#292a2d'}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
