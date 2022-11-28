@@ -46,9 +46,9 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   const [serverObjects, setServerObjects] = useState<ServerProps[]>([])
   const [accountObjects, setAccountObjects] = useState<AccountProps[]>([])
   const [projeto, setProjeto] = useState(1)
-  const [conta_servico, setConta_servico] = useState(1)
-  const [integracao, setIntegracao] = useState<IntegrationProps>()
-  const [servidor, setServidor] = useState(1)
+  const [conta_servico, setConta_servico] = useState<AccountProps[]>([])
+  const [integracao, setIntegracao] = useState<IntegrationProps[]>([])
+  const [servidor, setServidor] = useState<ServerProps[]>([])
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
   const { getApiResponse } = useContext(ProjectsContext)
@@ -56,14 +56,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
   const { errorToastMessage } = useContext(ProjectsContext)
   const animatedComponent = makeAnimated()
 
-  // adicionando label nos objects
-  const multiSelectObjects = (object: any) =>{
-    const newObject = object.map((item: any) =>{
-      return{...item, label:item.nome, value:item.id, key:item.id}
-    })
-
-    return newObject
-  }
 
   
   const handleIntegrationChange = (items: any, setState: any) =>{
@@ -72,10 +64,10 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
   const setVariablesToZero = () => {
     setProjeto(1);
-    setServidor(1);
-    setConta_servico(1)
+    setIntegracao([])
+    setServidor([]);
+    setConta_servico([])
   };
-
 
 
   useEffect(() => {
@@ -86,7 +78,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
         setState(state[0].id)
         return state
       })
-      setStateObjects
     };
 
     getApiResponse('/projetos/', setProjectsObjects, setProjeto)
@@ -101,11 +92,10 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
     
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
-        console.log(row.integracao)
         setProjeto(row.projeto.id);
-        setIntegracao(row.integracao);
-        setServidor(row.servidor.id);
-        setConta_servico(row.conta_servico.id);
+        setIntegracao(multiSelectObjects(row.integracao));
+        setServidor(multiSelectObjects(row.servidor));
+        setConta_servico(multiSelectObjects(row.conta_servico));
         setClickedTableRowId(row.id);
       } else {
         setVariablesToZero();
@@ -116,6 +106,16 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
     defineMode(clickedTableRow);
   }, [clickedTableRow, isAddMode]);
+
+
+  // adicionando label nos objects
+  const multiSelectObjects = (object: any) =>{
+    const newObject = object.map((item: any) =>{
+      return{...item, label:item.nome, value:item.id, key:item.id}
+    })
+
+    return newObject
+  }
 
   function handleSubmit(data: FormEvent) {
     return addMode ? createNewInventory(data) : updateInventory(data);
@@ -213,6 +213,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
         onChange={(items) => handleIntegrationChange(items, setIntegracao)}
         className={styles.multiselect}
         components={animatedComponent}
+        value={integracao}
         />
 
         <Select 
@@ -221,6 +222,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
         onChange={(items) => handleIntegrationChange(items, setServidor)}
         className={styles.multiselect}
         components={animatedComponent}
+        value={servidor}
         />
 
         <Select 
@@ -229,6 +231,7 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
         onChange={(items) => handleIntegrationChange(items, setConta_servico)}
         className={styles.multiselect}
         components={animatedComponent}
+        value={conta_servico}
         />
 
         
