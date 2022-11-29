@@ -118,14 +118,14 @@ export function ViewModal() {
                   <p>Teste</p>
                 </div>
               );
-            } else {
+            }
               return (
                 <div key={index}>
                   <h1>Ambiente</h1>
                   <p>Não foi possível identificar</p>
                 </div>
               );
-            }
+            
 
           case "observacao":
             return (
@@ -143,14 +143,14 @@ export function ViewModal() {
                   <p>V.tal</p>
                 </div>
               );
-            } else {
+            }
               return (
                 <div key={index}>
                   <h1>Empresa</h1>
                   <p>Oi</p>
                 </div>
               );
-            }
+            
 
           case "area_negocio":
             return (

@@ -5,6 +5,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { ServerModal } from "../components/Modals/ServerModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
+import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 
 
 export default function Servers() {
@@ -79,6 +80,7 @@ export default function Servers() {
         <Sidebar
           tableName={tableName}
           handleOpenNewProjectModal={handleOpenNewProjectModal}
+          TableIcon={DnsRoundedIcon}
         />
         <div className="home-container">
           <Table

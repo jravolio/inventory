@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {DataGrid,GridColDef, GridToolbarColumnsButton, GridToolbarContainer, GridToolbarDensitySelector, GridToolbarExport, GridToolbarQuickFilter} from "@mui/x-data-grid";
 import styles from "./styles.module.scss";
 import { ToastContainer } from 'react-toastify';
@@ -22,7 +22,12 @@ export function Table({ columns, handleEditButton }: TableProps) {
   const { handleOpenViewModal } = useContext(ProjectsContext)
   const { handleCloseDeleteModal } = useContext(ProjectsContext)
   const { isDeleteModalOpen } = useContext(ProjectsContext)
+  const { getApiResponse } = useContext(ProjectsContext)
 
+
+  useEffect(() =>{
+    getApiResponse()
+  }, [])
 
   // Coluna de edição e de ações
   const actionColumn = [
@@ -32,6 +37,7 @@ export function Table({ columns, handleEditButton }: TableProps) {
       description:'Coluna para realizar ações',
       sortable: false,
       width: 140,
+      disableExport: true,
       renderCell: (params: { row: { id: number } }) => {
         return (
           <div className={styles.cellAction}>
@@ -65,7 +71,12 @@ export function Table({ columns, handleEditButton }: TableProps) {
         <div>
           <GridToolbarColumnsButton color="inherit"/>
           <GridToolbarDensitySelector color="inherit"/>
-          <GridToolbarExport color="inherit"/>
+          <GridToolbarExport color="inherit"
+            csvOptions={{
+              delimiter: ';',
+              utf8WithBom: true,
+            }}
+          />
         </div>
         <GridToolbarQuickFilter />
       </GridToolbarContainer>

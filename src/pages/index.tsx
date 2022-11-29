@@ -1,11 +1,12 @@
 import { Table } from "../components/Table/index";
 import { Sidebar } from "../components/Sidebar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { GridColDef } from "@mui/x-data-grid";
 import { InventoryModal } from "../components/Modals/InventoryModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
-import { ViewModal } from "../components/Modals/ViewModal";
+import HomeRounded from "@mui/icons-material/HomeRounded";
+
 
 export default function Home() {
   const apiUrl = "/inventarios";
@@ -16,7 +17,6 @@ export default function Home() {
   const { isAddMode } = useContext(ProjectsContext);
   const { clickedTableRow } = useContext(ProjectsContext);
   const { handleOpenNewProjectModal } = useContext(ProjectsContext);
-  const { handleOpenViewModal } = useContext(ProjectsContext);
 
 
   // Definindo colunas
@@ -84,6 +84,7 @@ export default function Home() {
         <Sidebar
           tableName={tableName}
           handleOpenNewProjectModal={handleOpenNewProjectModal}
+          TableIcon={HomeRounded}
         />
         <div className="home-container">
           <Table columns={columns} handleEditButton={handleEditButton} />

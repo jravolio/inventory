@@ -5,6 +5,8 @@ import { GridColDef } from "@mui/x-data-grid";
 import { ProjectModal } from "../components/Modals/ProjectModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
+import TerminalRoundedIcon from "@mui/icons-material/TerminalRounded";
+
 
 export default function Projects() {
   const apiUrl = "/projetos";
@@ -55,6 +57,7 @@ export default function Projects() {
         <Sidebar 
           tableName={tableName}
           handleOpenNewProjectModal={handleOpenNewProjectModal}
+          TableIcon={TerminalRoundedIcon}
         />
         <div className="home-container">
           <Table

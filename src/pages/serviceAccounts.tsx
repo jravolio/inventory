@@ -5,6 +5,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { AccountModal } from "../components/Modals/AccountModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
+import SupervisorAccountRoundedIcon from "@mui/icons-material/SupervisorAccountRounded";
 
 
 export default function ServiceAccounts() {
@@ -46,8 +47,9 @@ export default function ServiceAccounts() {
           <title>Contas de serviço</title>
         </Head>
         <Sidebar 
-        tableName={tableName}
-        handleOpenNewProjectModal={handleOpenNewProjectModal}
+          tableName={tableName}
+          handleOpenNewProjectModal={handleOpenNewProjectModal}
+          TableIcon={SupervisorAccountRoundedIcon}
         />
         <div className="home-container">
           <Table

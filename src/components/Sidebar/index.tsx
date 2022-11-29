@@ -1,4 +1,3 @@
-import * as React from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -13,7 +12,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Button from "@mui/material/Button";
-import {ListItem,ListItemButton,ListItemIcon,ListItemText} from "@mui/material";
+import { ListItem,ListItemButton,ListItemIcon,ListItemText} from "@mui/material";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import SupervisorAccountRoundedIcon from "@mui/icons-material/SupervisorAccountRounded";
 import TerminalRoundedIcon from "@mui/icons-material/TerminalRounded";
@@ -22,6 +21,7 @@ import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 import Tooltip from "@mui/material/Tooltip";
 import styles from "./styles.module.scss";
+import { useState } from "react";
 
 const drawerWidth = 240;
 
@@ -97,12 +97,13 @@ const Drawer = styled(MuiDrawer, {
 
 interface SidebarProps {
   tableName: string;
+  TableIcon: any
   handleOpenNewProjectModal: () => void;
 }
 
-export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
+export function Sidebar({ tableName, handleOpenNewProjectModal, TableIcon }: SidebarProps) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -139,7 +140,12 @@ export function Sidebar({ tableName,handleOpenNewProjectModal }: SidebarProps) {
             justifyContent="space-between"
             width="100vw"
           >
-            {tableName}
+            <div className={styles.tableInfo}>
+              <TableIcon />
+              {tableName}
+            </div>
+
+
             <a href="/" className={styles.logo}>
               <img src="assets/vtalLogoWhite.svg" width="80px" />
             </a>

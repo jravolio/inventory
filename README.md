@@ -1,16 +1,11 @@
 
-inventario/all
-#TODO: TROCAR TUDO PARA DIALOG MUI
-#TODO: Modal add inventário
-#TODO: busca por geral
-
 - Mudar ordem menu hamburguer (Home > Projeto > Integração > Servidores > Contas > Empresas); ✅
 
 - Mudar ordem das colunas na visão de inventário ( Projeto > Integração > Servidor > Conta > Empresa > Descrição Projeto > Descrição Integração); ✅
 
 - Adicionar descrições de projeto e integração na visão de inventário; ✅
 
-- Adicionar a opção de mais servidores e mais integrações; Aguardar back-end ⚠️
+- Adicionar a opção de mais servidores e mais integrações; ✅
 
 - Adicionar visualização de projeto como um card; ✅
 
@@ -22,14 +17,14 @@ inventario/all
 
 - Viewmodal não funciona ✅
 
+- Ajustar arquivo csv ✅
+
+- consertar put inventário ✅
+
+- adicionar icone ao lado do titulo do dialog mui ✅
+
 - Descrição integração sumiu, será uma tabela vinda de adicionar inventário?(consultar backend)
 
 - Adicionar clicar no link abrir integração ou servidor
 
-- Verificar se existe conta, caso não retornar "não existente"
-
-- Ajustar arquivo csv
-
-- adicionar icone ao lado do titulo do dialog mui
-
-- consertar put inventário
+- Trocar para dialog MUI

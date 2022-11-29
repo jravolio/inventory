@@ -5,6 +5,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { CompanyModal } from "../components/Modals/CompanyModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
+import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 
 export default function Companies() {
   const apiUrl = "/empresas";
@@ -32,8 +33,9 @@ export default function Companies() {
           <title>Empresas</title>
         </Head>
         <Sidebar 
-        tableName={tableName}
-        handleOpenNewProjectModal={handleOpenNewProjectModal}
+          tableName={tableName}
+          handleOpenNewProjectModal={handleOpenNewProjectModal}
+          TableIcon={ApartmentRoundedIcon}
         />
         <div className="home-container">
           <Table

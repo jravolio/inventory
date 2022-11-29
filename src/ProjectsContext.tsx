@@ -48,24 +48,15 @@ export function ProjectsProvider({ apiUrl, children }: ProjectsProviderProps) {
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
   // Realizando chamada na api e renderizando a pagina sempre que o componente clickedTableRow for atualizado
-  useEffect(() => {
-    getApiResponse();
-  }, [clickedTableRow]);
 
   async function handleDeleteButton(event: any, row: any) {
     event.stopPropagation();
     setClickedTableRow(row);
-    if (apiUrl == "/inventario/all/") {
-      await api
-        .delete("/inventarios/" + row.id)
-        .then(() => sucessToastMessage("Arquivo excluído com sucesso!"))
-        .catch((error) => errorToastMessage(error));
-    } else {
-      await api
-        .delete(apiUrl + "/" + row.id)
-        .then(() => sucessToastMessage("Arquivo excluído com sucesso!"))
-        .catch((error) => errorToastMessage(error));
-    }
+    await api
+      .delete(apiUrl + "/" + row.id)
+      .then(() => sucessToastMessage("Arquivo excluído com sucesso!"))
+      .catch((error) => errorToastMessage(error));
+
     handleCloseDeleteModal();
     getApiResponse();
   }

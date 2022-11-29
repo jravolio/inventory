@@ -5,6 +5,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { IntegrationModal } from "../components/Modals/IntegrationModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
+import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
 
 
 export default function Integrations() {
@@ -33,8 +34,9 @@ export default function Integrations() {
           <title>Integrações</title>
         </Head>
         <Sidebar 
-        tableName={tableName}
-        handleOpenNewProjectModal={handleOpenNewProjectModal}
+          tableName={tableName}
+          handleOpenNewProjectModal={handleOpenNewProjectModal}
+          TableIcon={AccountTreeRoundedIcon}
         />
         <div className="home-container">
           <Table
