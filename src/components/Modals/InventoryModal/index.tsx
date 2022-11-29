@@ -222,6 +222,7 @@ export function InventoryModal({
             className={styles.multiselect}
             components={animatedComponent}
             value={integracao}
+            placeholder='Selecione...'
           />
         </div>
 
@@ -234,6 +235,7 @@ export function InventoryModal({
             onChange={(items) => handleIntegrationChange(items, setServidor)}
             className={styles.multiselect}
             components={animatedComponent}
+            placeholder='Selecione...'
             value={servidor}
           />
         </div>
@@ -248,6 +250,7 @@ export function InventoryModal({
             }
             className={styles.multiselect}
             components={animatedComponent}
+            placeholder='Selecione...'
             value={conta_servico}
           />
         </div>
