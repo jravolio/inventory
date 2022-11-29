@@ -3,15 +3,16 @@ import Modal from "react-modal";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../../../services/api";
 import { ProjectsContext } from "../../../ProjectsContext";
-import Select from 'react-select'
+import Select from "react-select";
 import styles from "./styles.module.scss";
-import makeAnimated from 'react-select/animated'
+import makeAnimated from "react-select/animated";
+import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 
 interface NewAccountModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   isAddMode: boolean;
-  clickedTableRow: any
+  clickedTableRow: any;
 }
 
 interface IntegrationProps {
@@ -20,76 +21,82 @@ interface IntegrationProps {
   descricao: string;
   observacao: string;
 }
-interface ProjetoProps extends IntegrationProps{
+interface ProjetoProps extends IntegrationProps {
   area_negocio: string;
   tipo: string;
 }
 interface AccountProps extends IntegrationProps {
   empresa: number;
 }
-interface ServerProps extends IntegrationProps{
+interface ServerProps extends IntegrationProps {
   tipo: string;
   ambiente: string;
   empresa: number;
 }
-interface clickedTableProps extends IntegrationProps{
-  conta_servico: AccountProps
-  projeto: ProjetoProps
-  integracao: IntegrationProps
-  servidor: ServerProps
+interface clickedTableProps extends IntegrationProps {
+  conta_servico: AccountProps;
+  projeto: ProjetoProps;
+  integracao: IntegrationProps;
+  servidor: ServerProps;
 }
 
-
-export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
-  const [projectsObjects, setProjectsObjects] = useState<ProjetoProps[]>([])
-  const [integrationObjects, setIntegrationObjects] = useState<IntegrationProps[]>([])
-  const [serverObjects, setServerObjects] = useState<ServerProps[]>([])
-  const [accountObjects, setAccountObjects] = useState<AccountProps[]>([])
-  const [projeto, setProjeto] = useState(1)
-  const [conta_servico, setConta_servico] = useState<AccountProps[]>([])
-  const [integracao, setIntegracao] = useState<IntegrationProps[]>([])
-  const [servidor, setServidor] = useState<ServerProps[]>([])
+export function InventoryModal({
+  isOpen,
+  onRequestClose,
+  isAddMode,
+  clickedTableRow,
+}: NewAccountModalProps) {
+  const [projectsObjects, setProjectsObjects] = useState<ProjetoProps[]>([]);
+  const [integrationObjects, setIntegrationObjects] = useState<
+    IntegrationProps[]
+  >([]);
+  const [serverObjects, setServerObjects] = useState<ServerProps[]>([]);
+  const [accountObjects, setAccountObjects] = useState<AccountProps[]>([]);
+  const [projeto, setProjeto] = useState(1);
+  const [conta_servico, setConta_servico] = useState<AccountProps[]>([]);
+  const [integracao, setIntegracao] = useState<IntegrationProps[]>([]);
+  const [servidor, setServidor] = useState<ServerProps[]>([]);
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
-  const { getApiResponse } = useContext(ProjectsContext)
-  const { sucessToastMessage } = useContext(ProjectsContext)
-  const { errorToastMessage } = useContext(ProjectsContext)
-  const animatedComponent = makeAnimated()
+  const { getApiResponse } = useContext(ProjectsContext);
+  const { sucessToastMessage } = useContext(ProjectsContext);
+  const { errorToastMessage } = useContext(ProjectsContext);
+  const animatedComponent = makeAnimated();
 
-
-  
-  const handleIntegrationChange = (items: any, setState: any) =>{
-    setState(items)
-  }
+  const handleIntegrationChange = (items: any, setState: any) => {
+    setState(items);
+  };
 
   const setVariablesToZero = () => {
     setProjeto(1);
-    setIntegracao([])
+    setIntegracao([]);
     setServidor([]);
-    setConta_servico([])
+    setConta_servico([]);
   };
 
-
   useEffect(() => {
-    const getApiResponse = async (apiUrl: any, setStateObjects: any, setState: any) => {
+    const getApiResponse = async (
+      apiUrl: any,
+      setStateObjects: any,
+      setState: any
+    ) => {
       const { data } = await api.get(apiUrl);
       setStateObjects(data);
-      setStateObjects((state: any) =>{
-        setState(state[0].id)
-        return state
-      })
+      setStateObjects((state: any) => {
+        setState(state[0].id);
+        return state;
+      });
     };
 
-    getApiResponse('/projetos/', setProjectsObjects, setProjeto)
-    getApiResponse('/integracoes/', setIntegrationObjects, setIntegracao)
-    getApiResponse('/servidores/', setServerObjects, setServidor)
-    getApiResponse('/contas/', setAccountObjects, setConta_servico)
-
+    getApiResponse("/projetos/", setProjectsObjects, setProjeto);
+    getApiResponse("/integracoes/", setIntegrationObjects, setIntegracao);
+    getApiResponse("/servidores/", setServerObjects, setServidor);
+    getApiResponse("/contas/", setAccountObjects, setConta_servico);
   }, []);
 
   useEffect(() => {
     setAddMode(isAddMode);
-    
+
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
         setProjeto(row.projeto.id);
@@ -102,20 +109,17 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       }
     };
 
-
-
     defineMode(clickedTableRow);
   }, [clickedTableRow, isAddMode]);
 
-
   // adicionando label nos objects
-  const multiSelectObjects = (object: any) =>{
-    const newObject = object.map((item: any) =>{
-      return{...item, label:item.nome, value:item.id, key:item.id}
-    })
+  const multiSelectObjects = (object: any) => {
+    const newObject = object.map((item: any) => {
+      return { ...item, label: item.nome, value: item.id, key: item.id };
+    });
 
-    return newObject
-  }
+    return newObject;
+  };
 
   function handleSubmit(data: FormEvent) {
     return addMode ? createNewInventory(data) : updateInventory(data);
@@ -131,15 +135,14 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       conta_servico,
     };
 
-
     await api
       .post("/inventarios/", data)
-      .then(() => sucessToastMessage('Criado com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Criado com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
-    setVariablesToZero()
+    setVariablesToZero();
 
-    getApiResponse() // apenas para atualizar o grid
+    getApiResponse(); // apenas para atualizar o grid
 
     onRequestClose();
   }
@@ -156,16 +159,15 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
     await api
       .put("/inventarios/" + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage('Modificado com sucesso!'))
-      .catch((error) => errorToastMessage(error))
-      
-      setVariablesToZero()
-  
-      getApiResponse() // apenas para atualizar o grid
-  
-      onRequestClose();
-  }
+      .then(() => sucessToastMessage("Modificado com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
+    setVariablesToZero();
+
+    getApiResponse(); // apenas para atualizar o grid
+
+    onRequestClose();
+  }
 
   const handleSelect = (event: any, setState: any) => {
     const index = event.target.selectedIndex;
@@ -174,7 +176,6 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
 
     setState(Number(optionElementId));
   };
-
 
   return (
     <Modal
@@ -189,53 +190,68 @@ export function InventoryModal({ isOpen,onRequestClose,isAddMode,clickedTableRow
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar inventário" : "Editar inventário"}</h2>
+        <div className={styles.header}>
+          <ListAltRoundedIcon className="icon"/>
+          <h2>{addMode ? "Criar inventário" : "Editar inventário"}</h2>
+        </div>
 
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelect(event, setProjeto)}
-          value={projeto}
-          id='test'
-        >
-          {projectsObjects.map((item) => {
-            return (
-              <option id={item.id.toString()} value={item.id} key={item.id}>
-                {item.nome}
-              </option>
-            );
-          })}
-        </select>
+        <div className="react-modal-div">
+          <h3>Projeto</h3>
+          <select
+            className="react-modal-options"
+            onChange={(event) => handleSelect(event, setProjeto)}
+            value={projeto}
+            id="test"
+          >
+            {projectsObjects.map((item) => {
+              return (
+                <option id={item.id.toString()} value={item.id} key={item.id}>
+                  {item.nome}
+                </option>
+              );
+            })}
+          </select>
+        </div>
 
-          
-        <Select 
-        isMulti={true}
-        options={multiSelectObjects(integrationObjects)}
-        onChange={(items) => handleIntegrationChange(items, setIntegracao)}
-        className={styles.multiselect}
-        components={animatedComponent}
-        value={integracao}
-        />
+        <div className="react-modal-div">
+          <h3>Integrações</h3>
+          <Select
+            isMulti={true}
+            options={multiSelectObjects(integrationObjects)}
+            onChange={(items) => handleIntegrationChange(items, setIntegracao)}
+            className={styles.multiselect}
+            components={animatedComponent}
+            value={integracao}
+          />
+        </div>
 
-        <Select 
-        isMulti={true}
-        options={multiSelectObjects(serverObjects)}
-        onChange={(items) => handleIntegrationChange(items, setServidor)}
-        className={styles.multiselect}
-        components={animatedComponent}
-        value={servidor}
-        />
+        <div className="react-modal-div">
+          <h3>Servidores</h3>
 
-        <Select 
-        isMulti={true}
-        options={multiSelectObjects(accountObjects)}
-        onChange={(items) => handleIntegrationChange(items, setConta_servico)}
-        className={styles.multiselect}
-        components={animatedComponent}
-        value={conta_servico}
-        />
+          <Select
+            isMulti={true}
+            options={multiSelectObjects(serverObjects)}
+            onChange={(items) => handleIntegrationChange(items, setServidor)}
+            className={styles.multiselect}
+            components={animatedComponent}
+            value={servidor}
+          />
+        </div>
 
-        
-        <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
+        <div className="react-modal-div">
+          <h3>Contas de serviço</h3>
+          <Select
+            isMulti={true}
+            options={multiSelectObjects(accountObjects)}
+            onChange={(items) =>
+              handleIntegrationChange(items, setConta_servico)
+            }
+            className={styles.multiselect}
+            components={animatedComponent}
+            value={conta_servico}
+          />
+        </div>
+        <button type="submit">{addMode ? "Cadastrar" : "Salvar"}</button>
       </form>
     </Modal>
   );

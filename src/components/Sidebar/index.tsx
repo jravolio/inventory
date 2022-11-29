@@ -13,7 +13,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Button from "@mui/material/Button";
 import { ListItem,ListItemButton,ListItemIcon,ListItemText} from "@mui/material";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
 import SupervisorAccountRoundedIcon from "@mui/icons-material/SupervisorAccountRounded";
 import TerminalRoundedIcon from "@mui/icons-material/TerminalRounded";
 import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
@@ -189,7 +189,7 @@ export function Sidebar({ tableName, handleOpenNewProjectModal, TableIcon }: Sid
                   px: 2.5,
                 }}
               >
-                <Tooltip title="Home">
+                <Tooltip title="Inventário">
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
@@ -197,10 +197,10 @@ export function Sidebar({ tableName, handleOpenNewProjectModal, TableIcon }: Sid
                       justifyContent: "center",
                     }}
                   >
-                    <HomeRoundedIcon className={styles.icon}/>
+                    <ListAltRoundedIcon className={styles.icon}/>
                   </ListItemIcon>
                 </Tooltip>
-                <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} className={styles.text} />
+                <ListItemText primary="Inventário" sx={{ opacity: open ? 1 : 0 }} className={styles.text} />
               </ListItemButton>
             </a>
           </ListItem>

@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 
-:root{
+:root {
   --primary-color-1: #fff;
 }
 
@@ -34,13 +34,22 @@ body {
   align-items: center;
   justify-content: center;
 
+  .react-modal-div {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
   .react-modal-content {
     width: 100%;
     max-width: 576px;
     background: #f2f2f2;
-    padding: 3rem;
+    padding: 1rem;
     position: relative;
     border-radius: 0.25rem;
+
+    .icon{
+      font-size: 2.5rem;
+    }
 
     form {
       display: flex;
@@ -48,38 +57,40 @@ body {
       align-items: center;
       flex-direction: column;
 
-      h2{
+      h2 {
         color: rgb(32, 32, 32);
         font-size: 1.5rem;
-        margin-bottom: 2rem;
       }
 
-      .react-modal-options{
+      .react-modal-options {
         width: 100%;
-        padding: 0 1.5rem;
-        height: 4rem;
+        padding: 0 0.4rem;
+        height: 2.2rem;
         border-radius: 0.25rem;
 
         border: 1px solid #d7d7d7;
-        background-color: #e7e9ee;
+        background-color: #ffffff;
 
         font-weight: 400;
         font-size: 1rem;
+        font-family: "Montserrat", sans-serif;
 
-        & + .react-modal-options{
-            margin-top: 1rem;
+        & + .react-modal-options {
+          margin-top: 1rem;
         }
       }
 
-      
+      textarea {
+        margin-top: 2rem;
+      }
 
-      button{
-        width: 100%;
+      button {
+        width: 45%;
         padding: 0 1.5rem;
-        height: 4rem;
-        
+        height: 3rem;
+
         background-color: #289c64;
-        color: #FFF;
+        color: #fff;
         border-radius: 0.25rem;
         border: 0;
 
@@ -91,20 +102,20 @@ body {
 
         transition: filter 0.3s;
 
-        &:hover{
-            filter: brightness(1.2);
+        &:hover {
+          filter: brightness(1.2);
         }
       }
     }
   }
 
-  .react-modal-close{
+  .react-modal-close {
     position: absolute;
     right: 1.5rem;
     top: 1.5rem;
     border: 0;
     background: transparent;
     cursor: pointer;
-    font-size: 25px
+    font-size: 25px;
   }
 }

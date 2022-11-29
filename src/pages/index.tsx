@@ -5,7 +5,7 @@ import { GridColDef } from "@mui/x-data-grid";
 import { InventoryModal } from "../components/Modals/InventoryModal";
 import Head from "next/head";
 import { ProjectsContext, ProjectsProvider } from "../ProjectsContext";
-import HomeRounded from "@mui/icons-material/HomeRounded";
+import ListAltRoundedIcon from "@mui/icons-material/ListAltRounded";
 
 
 export default function Home() {
@@ -84,7 +84,7 @@ export default function Home() {
         <Sidebar
           tableName={tableName}
           handleOpenNewProjectModal={handleOpenNewProjectModal}
-          TableIcon={HomeRounded}
+          TableIcon={ListAltRoundedIcon}
         />
         <div className="home-container">
           <Table columns={columns} handleEditButton={handleEditButton} />

@@ -121,10 +121,10 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar servidor" : "Editar servidor"}</h2>
+        <h2>{addMode ? "Criar Empresa" : "Editar Empresa"}</h2>
 
         <input
-          placeholder="Nome do servidor"
+          placeholder="Nome do Empresa"
           value={nome}
           onChange={(event) => setNome(event.target.value)}
           className="react-modal-options"

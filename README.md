@@ -28,3 +28,17 @@
 - Adicionar clicar no link abrir integração ou servidor
 
 - Trocar para dialog MUI
+
+- Deixar modal com as mesmas cores do topbar(Realizar na mudança do dialog)
+
+- Trocar textarea
+
+- adicionar icones no view
+
+- Otimizar rotas editadas
+
+- Alinhas texto textarea, restringir dimensões
+
+- Alinhar botão de close e título
+
+- Adicionar label nos modals

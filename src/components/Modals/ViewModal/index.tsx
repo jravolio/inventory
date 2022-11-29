@@ -21,7 +21,7 @@ export function ViewModal() {
           case "nome":
             return (
               <div key={index}>
-                <h1>Nome</h1>
+                <h3>Nome</h3>
                 <p>{clickedTableRow.nome}</p>
               </div>
             );
@@ -29,7 +29,7 @@ export function ViewModal() {
           case "descricao":
             return (
               <div key={index}>
-                <h1>Descrição</h1>
+                <h3>Descrição</h3>
                 <p>{clickedTableRow.descricao}</p>
               </div>
             );
@@ -39,7 +39,7 @@ export function ViewModal() {
               if (clickedTableRow.tipo == "A") {
                 return (
                   <div key={index}>
-                    <h1>Tipo</h1>
+                    <h3>Tipo</h3>
                     <p>Servidor aplicacional</p>
                   </div>
                 );
@@ -47,7 +47,7 @@ export function ViewModal() {
 
               return (
                 <div key={index}>
-                  <h1>Tipo</h1>
+                  <h3>Tipo</h3>
                   <p>Banco de Dados</p>
                 </div>
               );
@@ -55,7 +55,7 @@ export function ViewModal() {
               if (clickedTableRow.tipo == "A") {
                 return (
                   <div key={index}>
-                    <h1>Tipo de projeto</h1>
+                    <h3>Tipo de projeto</h3>
                     <p>Ambiente</p>
                   </div>
                 );
@@ -63,7 +63,7 @@ export function ViewModal() {
               if (clickedTableRow.tipo == "B") {
                 return (
                   <div key={index}>
-                    <h1>Tipo de projeto</h1>
+                    <h3>Tipo de projeto</h3>
                     <p>Aplicação</p>
                   </div>
                 );
@@ -71,7 +71,7 @@ export function ViewModal() {
               if (clickedTableRow.tipo == "C") {
                 return (
                   <div key={index}>
-                    <h1>Tipo de projeto</h1>
+                    <h3>Tipo de projeto</h3>
                     <p>Automação</p>
                   </div>
                 );
@@ -79,7 +79,7 @@ export function ViewModal() {
               if (clickedTableRow.tipo == "D") {
                 return (
                   <div key={index}>
-                    <h1>Tipo de projeto</h1>
+                    <h3>Tipo de projeto</h3>
                     <p>RPA Uipath</p>
                   </div>
                 );
@@ -90,7 +90,7 @@ export function ViewModal() {
             if (clickedTableRow.ambiente == "PRD") {
               return (
                 <div key={index}>
-                  <h1>Ambiente</h1>
+                  <h3>Ambiente</h3>
                   <p>Produção</p>
                 </div>
               );
@@ -98,7 +98,7 @@ export function ViewModal() {
             if (clickedTableRow.ambiente == "DEV") {
               return (
                 <div key={index}>
-                  <h1>Ambiente</h1>
+                  <h3>Ambiente</h3>
                   <p>Desenvolvimento</p>
                 </div>
               );
@@ -106,7 +106,7 @@ export function ViewModal() {
             if (clickedTableRow.ambiente == "HML") {
               return (
                 <div key={index}>
-                  <h1>Ambiente</h1>
+                  <h3>Ambiente</h3>
                   <p>Homologação</p>
                 </div>
               );
@@ -114,14 +114,14 @@ export function ViewModal() {
             if (clickedTableRow.ambiente == "TST") {
               return (
                 <div key={index}>
-                  <h1>Ambiente</h1>
+                  <h3>Ambiente</h3>
                   <p>Teste</p>
                 </div>
               );
             }
               return (
                 <div key={index}>
-                  <h1>Ambiente</h1>
+                  <h3>Ambiente</h3>
                   <p>Não foi possível identificar</p>
                 </div>
               );
@@ -130,7 +130,7 @@ export function ViewModal() {
           case "observacao":
             return (
               <div key={index}>
-                <h1>Observação</h1>
+                <h3>Observação</h3>
                 <p>{clickedTableRow.observacao}</p>
               </div>
             );
@@ -139,14 +139,14 @@ export function ViewModal() {
             if (clickedTableRow.empresa == 1) {
               return (
                 <div key={index}>
-                  <h1>Empresa</h1>
+                  <h3>Empresa</h3>
                   <p>V.tal</p>
                 </div>
               );
             }
               return (
                 <div key={index}>
-                  <h1>Empresa</h1>
+                  <h3>Empresa</h3>
                   <p>Oi</p>
                 </div>
               );
@@ -155,7 +155,7 @@ export function ViewModal() {
           case "area_negocio":
             return (
               <div key={index}>
-                <h1>Área de negócio</h1>
+                <h3>Área de negócio</h3>
                 <p>{clickedTableRow.area_negocio}</p>
               </div>
             );
@@ -164,10 +164,10 @@ export function ViewModal() {
           case "projeto":
             return (
               <div key={index}>
-                <h1>Projeto</h1>
-                <h2 className={styles.subtitle}>
+                <h3>Projeto</h3>
+                <p className={styles.subtitle}>
                   {clickedTableRow.projeto.nome}
-                </h2>
+                </p>
               </div>
             );
 
@@ -175,7 +175,7 @@ export function ViewModal() {
             const rowIntegration = clickedTableRow.integracao;
             return (
               <div key={index}>
-                <h1>Integrações</h1>
+                <h3>Integrações</h3>
                 <div className={styles.divFlex}>
                   {rowIntegration.map((row: any, index: number) => (
                     <p key={index}>{row.nome}</p>
@@ -188,7 +188,7 @@ export function ViewModal() {
               const rowAccount = clickedTableRow.conta_servico;
             return (
               <div key={index}>
-                <h1>Conta de serviço</h1>
+                <h3>Conta de serviço</h3>
                 <div className={styles.divFlex}>
                   {rowAccount.map((row: any, index: number) => (
                     <p key={index}>{row.nome}</p>
@@ -201,14 +201,14 @@ export function ViewModal() {
               const rowServer = clickedTableRow.servidor;
               return (
                 <div key={index}>
-                  <h1>Servidores</h1>
+                  <h3>Servidores</h3>
                   <div className={styles.divFlex}>
                     {rowServer.map((row: any, index: number) => (
                       <p key={index}>{row.nome}</p>
                     ))}
                   </div>
 
-                  <h1>Descrição do projeto</h1>
+                  <h3>Descrição do projeto</h3>
                   <p>{clickedTableRow.projeto.descricao}</p>
                 </div>
               );

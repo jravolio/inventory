@@ -1,12 +1,16 @@
 .multiselect{
   width: 100%;
-  padding: 0 1.5rem;
   min-height: 1rem;
   border-radius: 0.25rem;
 
   font-weight: 400;
   font-size: 1rem;
-
-  margin-top: 1rem;
   
 }
+
+.header{
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
