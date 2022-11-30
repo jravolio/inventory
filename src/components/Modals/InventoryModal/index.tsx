@@ -190,7 +190,7 @@ export function InventoryModal({
       </button>
 
       <form onSubmit={handleSubmit}>
-        <div className={styles.header}>
+        <div className="react-modal-header">
           <ListAltRoundedIcon className="icon"/>
           <h2>{addMode ? "Criar inventário" : "Editar inventário"}</h2>
         </div>

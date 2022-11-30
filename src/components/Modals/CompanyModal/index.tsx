@@ -3,12 +3,13 @@ import Modal from "react-modal";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../../../services/api";
 import { ProjectsContext } from "../../../ProjectsContext";
+import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 
 interface NewAccountModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   isAddMode: boolean;
-  clickedTableRow: any
+  clickedTableRow: any;
 }
 
 interface clickedTableProps {
@@ -17,21 +18,25 @@ interface clickedTableProps {
   descricao: string;
   observacao: string;
   empresa: number;
-  tipo: string
-  ambiente: string
+  tipo: string;
+  ambiente: string;
 }
 
-
-export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
+export function CompanyModal({
+  isOpen,
+  onRequestClose,
+  isAddMode,
+  clickedTableRow,
+}: NewAccountModalProps) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [observacao, setObservacao] = useState("");
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
-  const { getApiResponse } = useContext(ProjectsContext)
-  const { sucessToastMessage } = useContext(ProjectsContext)
-  const { errorToastMessage } = useContext(ProjectsContext)
-  const apiUrl = "/empresas/"
+  const { getApiResponse } = useContext(ProjectsContext);
+  const { sucessToastMessage } = useContext(ProjectsContext);
+  const { errorToastMessage } = useContext(ProjectsContext);
+  const apiUrl = "/empresas/";
 
   const setVariablesToZero = () => {
     setNome("");
@@ -41,7 +46,6 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
 
   useEffect(() => {
     setAddMode(isAddMode);
-
 
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
@@ -57,7 +61,6 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
     defineMode(clickedTableRow);
   }, [clickedTableRow, isAddMode]);
 
-
   function handleSubmit(data: FormEvent) {
     return addMode ? createNewCompany(data) : updateCompany(data);
   }
@@ -71,16 +74,14 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       observacao,
     };
 
-    
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage('Empresa criada com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Empresa criada com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
-    
-    setVariablesToZero()
+    setVariablesToZero();
 
-    getApiResponse() // apenas para atualizar o grid
+    getApiResponse(); // apenas para atualizar o grid
 
     onRequestClose();
   }
@@ -96,17 +97,15 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage('Empresa modificada com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Empresa modificada com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
-      
-      setVariablesToZero()
-  
-      getApiResponse() // apenas para atualizar o grid
-  
-      onRequestClose();
+    setVariablesToZero();
+
+    getApiResponse(); // apenas para atualizar o grid
+
+    onRequestClose();
   }
-
 
   return (
     <Modal
@@ -121,28 +120,40 @@ export function CompanyModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar Empresa" : "Editar Empresa"}</h2>
+        <div className="react-modal-header">
+          <ApartmentRoundedIcon className="icon" />
+          <h2>{addMode ? "Criar Empresa" : "Editar Empresa"}</h2>
+        </div>
 
-        <input
-          placeholder="Nome do Empresa"
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Nome da empresa</h3>
+          <input
+            placeholder="Nome da Empresa"
+            value={nome}
+            onChange={(event) => setNome(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Descrição"
-          value={descricao}
-          onChange={(event) => setDescricao(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Descrição da Empresa</h3>
+          <textarea
+            placeholder="Descrição"
+            value={descricao}
+            onChange={(event) => setDescricao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Observação"
-          value={observacao}
-          onChange={(event) => setObservacao(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Observação sobre a empresa</h3>
+          <textarea
+            placeholder="Observação"
+            value={observacao}
+            onChange={(event) => setObservacao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
         <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
       </form>

@@ -20,7 +20,7 @@ export default function Projects() {
 
   // Definindo colunas
   const columns: GridColDef[] = [
-    { field: "nome", headerName: "Nome", width: 150 },
+    { field: "nome", headerName: "Projeto", width: 150 },
     { field: "descricao", headerName: "Descrição", width: 150 },
     { field: "observacao", headerName: "Observação", width: 200 },
     { field: "area_negocio", headerName: "Área de negócio", width: 200 },

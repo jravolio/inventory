@@ -3,12 +3,13 @@ import Modal from "react-modal";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../../../services/api";
 import { ProjectsContext } from "../../../ProjectsContext";
+import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
 
 interface NewAccountModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   isAddMode: boolean;
-  clickedTableRow: any
+  clickedTableRow: any;
 }
 
 interface clickedTableProps {
@@ -17,21 +18,25 @@ interface clickedTableProps {
   descricao: string;
   observacao: string;
   empresa: number;
-  tipo: string
-  ambiente: string
+  tipo: string;
+  ambiente: string;
 }
 
-
-export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
+export function IntegrationModal({
+  isOpen,
+  onRequestClose,
+  isAddMode,
+  clickedTableRow,
+}: NewAccountModalProps) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [observacao, setObservacao] = useState("");
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
-  const { getApiResponse } = useContext(ProjectsContext)
-  const { sucessToastMessage } = useContext(ProjectsContext)
-  const { errorToastMessage } = useContext(ProjectsContext)
-  const apiUrl = "/integracoes/"
+  const { getApiResponse } = useContext(ProjectsContext);
+  const { sucessToastMessage } = useContext(ProjectsContext);
+  const { errorToastMessage } = useContext(ProjectsContext);
+  const apiUrl = "/integracoes/";
 
   const setVariablesToZero = () => {
     setNome("");
@@ -41,7 +46,6 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
 
   useEffect(() => {
     setAddMode(isAddMode);
-
 
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
@@ -57,7 +61,6 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
     defineMode(clickedTableRow);
   }, [clickedTableRow, isAddMode]);
 
-
   function handleSubmit(data: FormEvent) {
     return addMode ? createNewIntegration(data) : updateIntegration(data);
   }
@@ -71,16 +74,14 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
       observacao,
     };
 
-    
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage('Integração criada com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Integração criada com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
-    
-    setVariablesToZero()
+    setVariablesToZero();
 
-    getApiResponse() // apenas para atualizar o grid
+    getApiResponse(); // apenas para atualizar o grid
 
     onRequestClose();
   }
@@ -96,17 +97,15 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage('Integração alterada com sucesso'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Integração alterada com sucesso"))
+      .catch((error) => errorToastMessage(error));
 
-      
-      setVariablesToZero()
-  
-      getApiResponse() // apenas para atualizar o grid
-  
-      onRequestClose();
+    setVariablesToZero();
+
+    getApiResponse(); // apenas para atualizar o grid
+
+    onRequestClose();
   }
-
 
   return (
     <Modal
@@ -121,30 +120,41 @@ export function IntegrationModal({ isOpen,onRequestClose,isAddMode,clickedTableR
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar servidor" : "Editar servidor"}</h2>
+        <div className="react-modal-header">
+          <AccountTreeRoundedIcon className="icon" />
+          <h2>{addMode ? "Criar Integração" : "Editar Integração"}</h2>
+        </div>
 
-        <input
-          placeholder="Nome do servidor"
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Nome da integração</h3>
+          <input
+            placeholder="Nome da integração"
+            value={nome}
+            onChange={(event) => setNome(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Descrição"
-          value={descricao}
-          onChange={(event) => setDescricao(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Descrição da integração</h3>
+          <textarea
+            placeholder="Descrição"
+            value={descricao}
+            onChange={(event) => setDescricao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
+        <div className="react-modal-div">
+          <h3>Observação da integração</h3>
+          <textarea
+            placeholder="Observação"
+            value={observacao}
+            onChange={(event) => setObservacao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Observação"
-          value={observacao}
-          onChange={(event) => setObservacao(event.target.value)}
-          className="react-modal-options"
-        />
-
-        <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
+        <button type="submit">{addMode ? "Cadastrar" : "Salvar"}</button>
       </form>
     </Modal>
   );

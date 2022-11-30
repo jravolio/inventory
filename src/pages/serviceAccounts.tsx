@@ -31,7 +31,7 @@ export default function ServiceAccounts() {
       width: 200,
       valueGetter: (params) => {
         // TODO: fazer isso ser dinâmico, pegando as empresas via api
-        if (params.row.empresa == 1) {
+        if (params.row.empresa.id == 1) {
           return "V.tal";
         } else {
           return "Oi";

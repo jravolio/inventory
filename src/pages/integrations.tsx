@@ -22,7 +22,7 @@ export default function Integrations() {
 
   // Definindo colunas
   const columns: GridColDef[] = [
-    { field: "nome", headerName: "Conta", width: 200 },
+    { field: "nome", headerName: "Integração", width: 200 },
     { field: "descricao", headerName: "Descrição", width: 300 },
     { field: "observacao", headerName: "Observação", width: 300 },
   ];

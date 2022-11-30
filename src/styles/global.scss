@@ -47,6 +47,11 @@ body {
     position: relative;
     border-radius: 0.25rem;
 
+    .react-modal-header{
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
     .icon{
       font-size: 2.5rem;
     }
@@ -60,6 +65,10 @@ body {
       h2 {
         color: rgb(32, 32, 32);
         font-size: 1.5rem;
+      }
+
+      textarea{
+        resize: vertical;
       }
 
       .react-modal-options {
@@ -78,10 +87,6 @@ body {
         & + .react-modal-options {
           margin-top: 1rem;
         }
-      }
-
-      textarea {
-        margin-top: 2rem;
       }
 
       button {

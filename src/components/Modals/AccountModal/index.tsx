@@ -3,12 +3,13 @@ import Modal from "react-modal";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../../../services/api";
 import { ProjectsContext } from "../../../ProjectsContext";
+import SupervisorAccountRoundedIcon from "@mui/icons-material/SupervisorAccountRounded";
 
 interface NewAccountModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   isAddMode: boolean;
-  clickedTableRow: any
+  clickedTableRow: any;
 }
 
 interface EmpresaProps {
@@ -25,8 +26,12 @@ interface clickedTableProps {
   empresa: number;
 }
 
-
-export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
+export function AccountModal({
+  isOpen,
+  onRequestClose,
+  isAddMode,
+  clickedTableRow,
+}: NewAccountModalProps) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
   const [observacao, setObservacao] = useState("");
@@ -34,13 +39,11 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
   const [empresa, setEmpresa] = useState(1);
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
-  const { getApiResponse } = useContext(ProjectsContext)
-  const { sucessToastMessage } = useContext(ProjectsContext)
-  const { errorToastMessage } = useContext(ProjectsContext)
-  const apiUrl = "/contas/"
-  
+  const { getApiResponse } = useContext(ProjectsContext);
+  const { sucessToastMessage } = useContext(ProjectsContext);
+  const { errorToastMessage } = useContext(ProjectsContext);
+  const apiUrl = "/contas/";
 
-  
   const setVariablesToZero = () => {
     setNome("");
     setDescricao("");
@@ -89,16 +92,14 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       empresa,
     };
 
-
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage('Conta criada com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Conta criada com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
-    
-    setVariablesToZero()
+    setVariablesToZero();
 
-    getApiResponse() // apenas para atualizar o grid
+    getApiResponse(); // apenas para atualizar o grid
 
     onRequestClose();
   }
@@ -115,15 +116,14 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage('Conta modificada com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Conta modificada com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
+    setVariablesToZero();
 
-      setVariablesToZero()
-  
-      getApiResponse() // apenas para atualizar o grid
-  
-      onRequestClose();
+    getApiResponse(); // apenas para atualizar o grid
+
+    onRequestClose();
   }
 
   const handleSelectCompany = (event: any) => {
@@ -147,43 +147,58 @@ export function AccountModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar conta" : "Editar usuário"}</h2>
+        <div className="react-modal-header">
+          <SupervisorAccountRoundedIcon className="icon" />
+          <h2>{addMode ? "Criar conta" : "Editar usuário"}</h2>
+        </div>
 
-        <input
-          placeholder="Nome da Conta"
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Nome da Conta</h3>
+          <input
+            placeholder="Nome da Conta"
+            value={nome}
+            onChange={(event) => setNome(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Descrição"
-          value={descricao}
-          onChange={(event) => setDescricao(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Descrição da conta</h3>
+          <textarea
+            placeholder="Descrição"
+            value={descricao}
+            onChange={(event) => setDescricao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Observação"
-          value={observacao}
-          onChange={(event) => setObservacao(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Observações da conta</h3>
+          <textarea
+            placeholder="Observação"
+            value={observacao}
+            onChange={(event) => setObservacao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelectCompany(event)}
-          value={empresa}
-        >
-          {empresaObjects.map((item) => {
-            return (
-              <option id={item.id.toString()} value={item.id} key={item.id}>
-                {item.nome}
-              </option>
-            );
-          })}
-        </select>
-        <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
+        <div className="react-modal-div">
+          <h3>Conta da empresa</h3>
+          <select
+            className="react-modal-options"
+            onChange={(event) => handleSelectCompany(event)}
+            value={empresa}
+          >
+            {empresaObjects.map((item) => {
+              return (
+                <option id={item.id.toString()} value={item.id} key={item.id}>
+                  {item.nome}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <button type="submit">{addMode ? "Cadastrar" : "Salvar"}</button>
       </form>
     </Modal>
   );

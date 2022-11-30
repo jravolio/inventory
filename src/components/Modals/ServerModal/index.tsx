@@ -3,12 +3,13 @@ import Modal from "react-modal";
 import { FormEvent, useContext, useEffect, useState } from "react";
 import { api } from "../../../../services/api";
 import { ProjectsContext } from "../../../ProjectsContext";
+import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 
 interface NewAccountModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
   isAddMode: boolean;
-  clickedTableRow: any
+  clickedTableRow: any;
 }
 
 interface EmpresaProps {
@@ -23,26 +24,31 @@ interface clickedTableProps {
   descricao: string;
   observacao: string;
   empresa: number;
-  tipo: string
-  ambiente: string
+  tipo: string;
+  ambiente: string;
 }
 
 // TODO: deixar isso dinâmico pra buscar os dados dentro da table
 
-export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}: NewAccountModalProps) {
+export function ServerModal({
+  isOpen,
+  onRequestClose,
+  isAddMode,
+  clickedTableRow,
+}: NewAccountModalProps) {
   const [nome, setNome] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [tipo, setTipo] = useState("")
-  const [ambiente, setAmbiente] = useState("")
+  const [tipo, setTipo] = useState("");
+  const [ambiente, setAmbiente] = useState("");
   const [observacao, setObservacao] = useState("");
   const [empresaObjects, setEmpresaObjects] = useState<EmpresaProps[]>([]);
   const [empresa, setEmpresa] = useState(1);
   const [addMode, setAddMode] = useState(isAddMode);
   const [clickedTableRowId, setClickedTableRowId] = useState(1);
-  const { getApiResponse } = useContext(ProjectsContext)
-  const { sucessToastMessage } = useContext(ProjectsContext)
-  const { errorToastMessage } = useContext(ProjectsContext)
-  const apiUrl = "/servidores/"
+  const { getApiResponse } = useContext(ProjectsContext);
+  const { sucessToastMessage } = useContext(ProjectsContext);
+  const { errorToastMessage } = useContext(ProjectsContext);
+  const apiUrl = "/servidores/";
 
   const setVariablesToZero = () => {
     setNome("");
@@ -56,15 +62,14 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
   useEffect(() => {
     setAddMode(isAddMode);
 
-
     const defineMode = (row: clickedTableProps) => {
       if (!isAddMode) {
         setNome(row.nome);
         setDescricao(row.descricao);
         setObservacao(row.observacao);
         setEmpresa(row.empresa);
-        setTipo(row.tipo)
-        setAmbiente(row.ambiente)
+        setTipo(row.tipo);
+        setAmbiente(row.ambiente);
         setClickedTableRowId(row.id);
       } else {
         setVariablesToZero();
@@ -89,7 +94,7 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
 
   async function createNewServer(event: FormEvent) {
     event.preventDefault();
-    
+
     const data = {
       nome,
       descricao,
@@ -98,17 +103,15 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
       observacao,
       empresa,
     };
-    
-    
+
     await api
       .post(apiUrl, data)
-      .then(() => sucessToastMessage('Servidor criado com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Servidor criado com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
-    
-    setVariablesToZero()
+    setVariablesToZero();
 
-    getApiResponse() // apenas para atualizar o grid
+    getApiResponse(); // apenas para atualizar o grid
 
     onRequestClose();
   }
@@ -127,15 +130,14 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
 
     await api
       .put(apiUrl + clickedTableRowId + "/", data)
-      .then(() => sucessToastMessage('Servidor modificado com sucesso!'))
-      .catch((error) => errorToastMessage(error))
+      .then(() => sucessToastMessage("Servidor modificado com sucesso!"))
+      .catch((error) => errorToastMessage(error));
 
-      
-      setVariablesToZero()
-  
-      getApiResponse() // apenas para atualizar o grid
-  
-      onRequestClose();
+    setVariablesToZero();
+
+    getApiResponse(); // apenas para atualizar o grid
+
+    onRequestClose();
   }
 
   const handleSelectCompany = (event: any) => {
@@ -146,13 +148,13 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
     setEmpresa(Number(optionElementId));
   };
 
-  const handleSelectType = (event: any) =>{
-    setTipo(event.target.value)
-  }
+  const handleSelectType = (event: any) => {
+    setTipo(event.target.value);
+  };
 
-  const handleSelectAmbient = (event: any) =>{
-    setAmbiente(event.target.value)
-  }
+  const handleSelectAmbient = (event: any) => {
+    setAmbiente(event.target.value);
+  };
 
   return (
     <Modal
@@ -167,64 +169,84 @@ export function ServerModal({ isOpen,onRequestClose,isAddMode,clickedTableRow,}:
       </button>
 
       <form onSubmit={handleSubmit}>
-        <h2>{addMode ? "Criar servidor" : "Editar servidor"}</h2>
+        <div className="react-modal-header">
+          <DnsRoundedIcon className="icon" />
+          <h2>{addMode ? "Criar servidor" : "Editar servidor"}</h2>
+        </div>
 
-        <input
-          placeholder="Nome do servidor"
-          value={nome}
-          onChange={(event) => setNome(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Nome do servidor</h3>
+          <input
+            placeholder="Nome do servidor"
+            value={nome}
+            onChange={(event) => setNome(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Descrição"
-          value={descricao}
-          onChange={(event) => setDescricao(event.target.value)}
-          className="react-modal-options"
-        />
+        <div className="react-modal-div">
+          <h3>Descrição do servidor</h3>
+          <textarea
+            placeholder="Descrição"
+            value={descricao}
+            onChange={(event) => setDescricao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelectType(event)}
-          value={tipo}
-        >
-          <option value="A">Servidor Aplicacional</option>
-          <option value="B">Banco de Dados</option>
-        </select>
+        <div className="react-modal-div">
+          <h3>Tipo de servidor</h3>
+          <select
+            className="react-modal-options"
+            onChange={(event) => handleSelectType(event)}
+            value={tipo}
+          >
+            <option value="A">Servidor Aplicacional</option>
+            <option value="B">Banco de Dados</option>
+          </select>
+        </div>
 
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelectAmbient(event)}
-          value={ambiente}
-        >
-          <option value="PRD">Produção</option>
-          <option value="DEV">Desenvolvimento</option>
-          <option value="HML">Homologação</option>
-          <option value="TST">Teste</option>
+        <div className="react-modal-div">
+          <h3>Área do servidor</h3>
+          <select
+            className="react-modal-options"
+            onChange={(event) => handleSelectAmbient(event)}
+            value={ambiente}
+          >
+            <option value="PRD">Produção</option>
+            <option value="DEV">Desenvolvimento</option>
+            <option value="HML">Homologação</option>
+            <option value="TST">Teste</option>
+          </select>
+        </div>
 
-        </select>
+        <div className="react-modal-div">
+          <h3>Observação do servidor</h3>
+          <textarea
+            placeholder="Observação"
+            value={observacao}
+            onChange={(event) => setObservacao(event.target.value)}
+            className="react-modal-options"
+          />
+        </div>
 
-        <textarea
-          placeholder="Observação"
-          value={observacao}
-          onChange={(event) => setObservacao(event.target.value)}
-          className="react-modal-options"
-        />
-
-        <select
-          className="react-modal-options"
-          onChange={(event) => handleSelectCompany(event)}
-          value={empresa}
-        >
-          {empresaObjects.map((item) => {
-            return (
-              <option id={item.id.toString()} value={item.id} key={item.id}>
-                {item.nome}
-              </option>
-            );
-          })}
-        </select>
-        <button type="submit">{addMode ? "Cadastrar" : "Editar"}</button>
+        <div className="react-modal-div">
+          <h3>Empresa</h3>
+          <select
+            className="react-modal-options"
+            onChange={(event) => handleSelectCompany(event)}
+            value={empresa}
+          >
+            {empresaObjects.map((item) => {
+              return (
+                <option id={item.id.toString()} value={item.id} key={item.id}>
+                  {item.nome}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <button type="submit">{addMode ? "Cadastrar" : "Salvar"}</button>
       </form>
     </Modal>
   );
