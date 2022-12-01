@@ -99,8 +99,8 @@ export function Table({ columns, handleEditButton }: TableProps) {
           getRowId={(row) => row.id}
           rows={projects}
           columns={columns.concat(actionColumn)}
-          pageSize={13}
-          rowsPerPageOptions={[13]}
+          pageSize={15}
+          rowsPerPageOptions={[15]}
           components={{ Toolbar: CustomToolbar }}
           localeText={{
             toolbarColumns: 'Colunas',

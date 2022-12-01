@@ -33,10 +33,14 @@
 
 - Otimizar rotas editadas
 
-- adicionar icones no view ✅
+- adicionar icones no viewmodal
 
 - Alinhas texto textarea, restringir dimensões ✅
 
 - Alinhar botão de close e título ✅
 
 - Adicionar label nos modals ✅
+
+- diminuir tamanho da table e trocar cor para branco do footer
+
+- consertar put contas de serviço

@@ -3,6 +3,10 @@ import Modal from "react-modal";
 import { useContext } from "react";
 import { ProjectsContext } from "../../../ProjectsContext";
 import styles from "./styles.module.scss";
+import TerminalRoundedIcon from "@mui/icons-material/TerminalRounded";
+import AccountTreeRoundedIcon from "@mui/icons-material/AccountTreeRounded";
+import SupervisorAccountRoundedIcon from "@mui/icons-material/SupervisorAccountRounded";
+import DnsRoundedIcon from "@mui/icons-material/DnsRounded";
 
 export function ViewModal() {
   const { isViewModalOpen } = useContext(ProjectsContext);
@@ -20,7 +24,7 @@ export function ViewModal() {
 
           case "nome":
             return (
-              <div key={index}>
+              <div key={index} className='react-modal-div'>
                 <h3>Nome</h3>
                 <p>{clickedTableRow.nome}</p>
               </div>
@@ -28,7 +32,7 @@ export function ViewModal() {
 
           case "descricao":
             return (
-              <div key={index}>
+              <div key={index} className='react-modal-div'>
                 <h3>Descrição</h3>
                 <p>{clickedTableRow.descricao}</p>
               </div>
@@ -38,7 +42,7 @@ export function ViewModal() {
             if (clickedTableRow.ambiente) {
               if (clickedTableRow.tipo == "A") {
                 return (
-                  <div key={index}>
+                  <div key={index} className='react-modal-div'>
                     <h3>Tipo</h3>
                     <p>Servidor aplicacional</p>
                   </div>
@@ -46,7 +50,7 @@ export function ViewModal() {
               }
 
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Tipo</h3>
                   <p>Banco de Dados</p>
                 </div>
@@ -54,7 +58,7 @@ export function ViewModal() {
             } else {
               if (clickedTableRow.tipo == "A") {
                 return (
-                  <div key={index}>
+                  <div key={index} className='react-modal-div'>
                     <h3>Tipo de projeto</h3>
                     <p>Ambiente</p>
                   </div>
@@ -62,7 +66,7 @@ export function ViewModal() {
               }
               if (clickedTableRow.tipo == "B") {
                 return (
-                  <div key={index}>
+                  <div key={index} className='react-modal-div'>
                     <h3>Tipo de projeto</h3>
                     <p>Aplicação</p>
                   </div>
@@ -70,7 +74,7 @@ export function ViewModal() {
               }
               if (clickedTableRow.tipo == "C") {
                 return (
-                  <div key={index}>
+                  <div key={index} className='react-modal-div'>
                     <h3>Tipo de projeto</h3>
                     <p>Automação</p>
                   </div>
@@ -78,7 +82,7 @@ export function ViewModal() {
               }
               if (clickedTableRow.tipo == "D") {
                 return (
-                  <div key={index}>
+                  <div key={index} className='react-modal-div'>
                     <h3>Tipo de projeto</h3>
                     <p>RPA Uipath</p>
                   </div>
@@ -89,7 +93,7 @@ export function ViewModal() {
           case "ambiente":
             if (clickedTableRow.ambiente == "PRD") {
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Ambiente</h3>
                   <p>Produção</p>
                 </div>
@@ -97,7 +101,7 @@ export function ViewModal() {
             }
             if (clickedTableRow.ambiente == "DEV") {
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Ambiente</h3>
                   <p>Desenvolvimento</p>
                 </div>
@@ -105,7 +109,7 @@ export function ViewModal() {
             }
             if (clickedTableRow.ambiente == "HML") {
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Ambiente</h3>
                   <p>Homologação</p>
                 </div>
@@ -113,14 +117,14 @@ export function ViewModal() {
             }
             if (clickedTableRow.ambiente == "TST") {
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Ambiente</h3>
                   <p>Teste</p>
                 </div>
               );
             }
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Ambiente</h3>
                   <p>Não foi possível identificar</p>
                 </div>
@@ -129,7 +133,7 @@ export function ViewModal() {
 
           case "observacao":
             return (
-              <div key={index}>
+              <div key={index} className='react-modal-div'>
                 <h3>Observação</h3>
                 <p>{clickedTableRow.observacao}</p>
               </div>
@@ -138,14 +142,14 @@ export function ViewModal() {
           case "empresa":
             if (clickedTableRow.empresa == 1) {
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Empresa</h3>
                   <p>V.tal</p>
                 </div>
               );
             }
               return (
-                <div key={index}>
+                <div key={index} className='react-modal-div'>
                   <h3>Empresa</h3>
                   <p>Oi</p>
                 </div>
@@ -154,7 +158,7 @@ export function ViewModal() {
 
           case "area_negocio":
             return (
-              <div key={index}>
+              <div key={index} className='react-modal-div'>
                 <h3>Área de negócio</h3>
                 <p>{clickedTableRow.area_negocio}</p>
               </div>
@@ -163,8 +167,11 @@ export function ViewModal() {
           // Rota inventário
           case "projeto":
             return (
-              <div key={index}>
-                <h3>Projeto</h3>
+              <div key={index} className='react-modal-div'>
+                <div className="react-modal-header">
+                  <TerminalRoundedIcon />
+                  <h3>Projeto</h3>
+                </div>
                 <p className={styles.subtitle}>
                   {clickedTableRow.projeto.nome}
                 </p>
@@ -174,8 +181,11 @@ export function ViewModal() {
           case "integracao":
             const rowIntegration = clickedTableRow.integracao;
             return (
-              <div key={index}>
-                <h3>Integrações</h3>
+              <div key={index} className='react-modal-div'>
+                <div className="react-modal-header">
+                  <AccountTreeRoundedIcon />
+                  <h3>Integrações</h3>
+                </div>
                 <div className={styles.divFlex}>
                   {rowIntegration.map((row: any, index: number) => (
                     <p key={index}>{row.nome}</p>
@@ -187,8 +197,11 @@ export function ViewModal() {
             case "conta_servico":
               const rowAccount = clickedTableRow.conta_servico;
             return (
-              <div key={index}>
-                <h3>Conta de serviço</h3>
+              <div key={index} className='react-modal-div'>
+                <div className="react-modal-header">
+                  <SupervisorAccountRoundedIcon />
+                  <h3>Conta de serviço</h3>
+                </div>
                 <div className={styles.divFlex}>
                   {rowAccount.map((row: any, index: number) => (
                     <p key={index}>{row.nome}</p>
@@ -200,16 +213,20 @@ export function ViewModal() {
             case "servidor":
               const rowServer = clickedTableRow.servidor;
               return (
-                <div key={index}>
-                  <h3>Servidores</h3>
+                <div key={index} className='react-modal-div'>
+                  <div className="react-modal-header">
+                    <DnsRoundedIcon />
+                    <h3>Servidores</h3>
+                  </div>
                   <div className={styles.divFlex}>
                     {rowServer.map((row: any, index: number) => (
                       <p key={index}>{row.nome}</p>
                     ))}
                   </div>
-
-                  <h3>Descrição do projeto</h3>
-                  <p>{clickedTableRow.projeto.descricao}</p>
+                  <div className="react-modal-div">
+                    <h3>Descrição do projeto</h3>
+                    <p>{clickedTableRow.projeto.descricao}</p>
+                  </div>
                 </div>
               );
 

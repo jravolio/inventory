@@ -59,7 +59,7 @@ export function AccountModal({
         setNome(row.nome);
         setDescricao(row.descricao);
         setObservacao(row.observacao);
-        setEmpresa(row.empresa);
+        setEmpresa(row.empresa.id); // erro ignorável
         setClickedTableRowId(row.id);
       } else {
         setVariablesToZero();
