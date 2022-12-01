@@ -33,7 +33,7 @@
 
 - Otimizar rotas editadas
 
-- adicionar icones no viewmodal
+- adicionar icones no viewmodal ✅
 
 - Alinhas texto textarea, restringir dimensões ✅
 
@@ -43,4 +43,4 @@
 
 - diminuir tamanho da table e trocar cor para branco do footer
 
-- consertar put contas de serviço
+- consertar put contas de serviço ✅
