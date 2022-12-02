@@ -21,7 +21,7 @@ export default function Companies() {
   // Definindo colunas
   const columns: GridColDef[] = [
     { field: "nome", headerName: "Empresa", width: 200 },
-    { field: "descricao", headerName: "Descrição", width: 100 },
+    { field: "descricao", headerName: "Descrição", width: 200 },
     { field: "observacao", headerName: "Observação", width: 200 },
 
   ];

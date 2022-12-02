@@ -4,6 +4,8 @@
 
 .divFlex{
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
   p{
     background-color: #8e98a72f;
     

@@ -22,8 +22,8 @@ export default function Servers() {
 
   // Definindo colunas
   const columns: GridColDef[] = [
-    { field: "nome", headerName: "Servidor", width: 200 },
-    { field: "descricao", headerName: "Descrição", width: 100 },
+    { field: "nome", headerName: "Servidor", width: 100 },
+    { field: "descricao", headerName: "Descrição", width: 200 },
     { field: "observacao", headerName: "Observação", width: 200 },
     {
       field: "tipo",

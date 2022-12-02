@@ -41,6 +41,6 @@
 
 - Adicionar label nos modals ✅
 
-- diminuir tamanho da table e trocar cor para branco do footer
+- diminuir tamanho da table e trocar cor para branco do footer ✅
 
 - consertar put contas de serviço ✅
